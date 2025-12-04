@@ -1,13 +1,178 @@
-body {
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Comic Relief;
+}
+html {
+  font-size: 62.5%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.appGrid {
+  display: grid;
+  grid-template-rows: 11rem 5rem 1fr;
+  height: 100vh;
+}
+.title {
+  width: 100%;
+  text-align: center;
+  background-color: blueviolet;
+  padding: 3rem;
+  font-size: 3.5rem;
+  margin: 0;
+  letter-spacing: 0.3rem;
+  border-bottom: 0.3rem solid black;
+}
+.ChooseToDo {
+  display: flex;
+  justify-content: space-between;
+}
+.btnChoose1,
+.btnChoose2 {
+  width: 50%;
+  font-size: large;
+  background-color: rgb(127, 39, 209);
+  border-top: 0px;
+  border-bottom: 0.3rem solid black;
+}
+.btnChoose1 {
+  border-left: 0.3rem solid black;
+  border-right: 0.15rem solid black;
+}
+.btnChoose2 {
+  border-right: 0.3rem solid black;
+  border-left: 0.15rem solid black;
+}
+.btnChoose1:hover,
+.btnChoose2:hover {
+  cursor: pointer;
+  background-color: rgb(139, 73, 201);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.info {
+  display: grid;
+  grid-template-columns: 1fr 15rem;
+}
+.chooseSubject {
+  border: 0.3rem solid black;
+  border-top: 0;
+  border-bottom: 0;
+  background-color: rgba(142, 111, 146, 0.444);
+}
+.chooseHeader {
+  text-align: center;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  margin-bottom: 2rem;
+  border-bottom: 0.3rem solid black;
+}
+.chooseSubject {
+  display: flex;
+  flex-direction: column;
+}
+.subjectsFlex {
+  display: flex;
+  flex-direction: column;
+}
+.subjectBtn {
+  align-self: center;
+  width: 80%;
+  padding: 1rem;
+}
+.subjectBtn:hover {
+  cursor: pointer;
+  background-color: rgb(139, 73, 201);
+}
+.btnChoose1:active,
+.btnChoose2:active {
+  font-size: 2rem;
+}
+.subjectBtn:active {
+  transform: scale(0.95);
+}
+.infoHeader {
+  padding-top: 0.5rem;
+  padding-bottom: 1.5rem;
+  font-size: 3.5rem;
+  text-align: center;
+  text-decoration: underline;
+}
+.infoSubject {
+  background-color: rgba(142, 111, 146, 0.444);
+  display: grid;
+  grid-template-rows: 8rem 5rem 30rem;
+}
+.chooseForm {
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+  font-size: 1.6rem;
+  padding-left: 2rem;
+}
+.inputForm {
+  padding: 1rem;
+  width: 30rem;
+}
+.flexSearchAndRate {
+  display: flex;
+  justify-content: space-between;
+}
+.btnRest {
+  border: none;
+  background-color: rgba(213, 187, 216, 0.444);
+  padding-right: 3rem;
+  text-decoration: underline;
+}
+.btnRest:hover {
+  cursor: pointer;
+  font-size: 1.4rem;
+}
+.rate {
+  display: flex;
+  flex-direction: column;
+  margin-left: 4rem;
+  gap: 3.5rem;
+}
+.addBtn {
+  width: 10rem;
+  padding: 1rem;
+  text-align: center;
+  align-self: end;
+}
+.addBtn:hover {
+  cursor: pointer;
+  font-size: 1.4rem;
+  background-color: rgb(139, 73, 201);
+}
+.flexWithStars {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 0.02rem;
+}
+.header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.userIcon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  padding: 0.3rem;
+  transform: translateY(-50%);
+  border: 0.1rem solid black;
+  border-radius: 100%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.userIcon:hover {
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
 }
