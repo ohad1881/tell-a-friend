@@ -1,0 +1,26 @@
+.ChooseToDo {
+  display: flex;
+  justify-content: space-between;
+}
+.btnChoose1,
+.btnChoose2 {
+  width: 50%;
+  font-size: large;
+  background-color: rgb(127, 39, 209);
+  border-top: 0px;
+  border-bottom: 0.3rem solid black;
+}
+.btnChoose1 {
+  border-left: 0.3rem solid black;
+  border-right: 0.15rem solid black;
+}
+.btnChoose2 {
+  border-right: 0.3rem solid black;
+  border-left: 0.15rem solid black;
+}
+.btnChoose1:hover,
+.btnChoose2:hover {
+  cursor: pointer;
+  background-color: rgb(139, 73, 201);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

@@ -1,4 +1,7 @@
-import "./index.css";
+import "./css/header.css";
+import "./css/chooseToDo.css";
+import "./css/info.css";
+import "./css/stars.css";
 import StarRating from "./StarRating";
 import { useState } from "react";
 function App() {

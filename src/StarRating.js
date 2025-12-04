@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./index.css";
+import "./css/header.css";
 export default function StarRating({ onChange }) {
   const [rating, setRating] = useState(0);
   const [tempRating, setTempRating] = useState(0);

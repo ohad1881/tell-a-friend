@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Comic Relief;
+}
+html {
+  font-size: 62.5%;
+}
+
+.appGrid {
+  display: grid;
+  grid-template-rows: 11rem 5rem 1fr;
+  height: 100vh;
+}
+.title {
+  width: 100%;
+  text-align: center;
+  background-color: blueviolet;
+  padding: 3rem;
+  font-size: 3.5rem;
+  margin: 0;
+  letter-spacing: 0.3rem;
+  border-bottom: 0.3rem solid black;
+}
+
+.header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.userIcon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  padding: 0.3rem;
+  transform: translateY(-50%);
+  border: 0.1rem solid black;
+  border-radius: 100%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.userIcon:hover {
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
+}
