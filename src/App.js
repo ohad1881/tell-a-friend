@@ -44,24 +44,84 @@ function Info() {
   const [service, setService] = useState(0);
   const [atmos, setAtmos] = useState(0);
   const [vfm, setVfm] = useState(0);
+  const [restaurantName, setRestaurantName] = useState("");
+  const [resturantChosen, setResturantChosen] = useState(false);
+  const [restAdress, setRestAdress] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
-  function handleSubmit(e) {
+  async function handleSearchChange(e) {
+    const value = e.target.value;
+    setRestaurantName(value);
+    setResturantChosen(false);
+    setRestAdress("");
+    setFood(0);
+    setAtmos(0);
+    setService(0);
+    setVfm(0);
+
+    if (value.length < 3) {
+      setSearchResults([]);
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:3001/restaurants?name=${value}`
+      );
+      const data = await response.json();
+      setSearchResults(data.results || []);
+    } catch (err) {
+      console.error("Search error:", err);
+    }
+  }
+
+  async function handleSubmit(e) {
     e.preventDefault();
+    if (!restaurantName) return alert("Enter a restaurant name!");
+
+    console.log(restaurantName);
+    console.log(restAdress);
+    console.log(food);
+    console.log(service);
+    console.log(atmos);
+    console.log(vfm);
   }
   return (
     <div className="info">
       <RateSubject
+        restaurantName={restaurantName}
+        setRestaurantName={setRestaurantName}
         handleSubmit={handleSubmit}
         setFood={setFood}
         setService={setService}
         setAtmos={setAtmos}
         setVfm={setVfm}
+        handleSearchChange={handleSearchChange}
+        searchResults={searchResults}
+        setSearchResults={setSearchResults}
+        setRestAdress={setRestAdress}
+        resturantChosen={resturantChosen}
+        setResturantChosen={setResturantChosen}
       />
       <ChooseSubject />
     </div>
   );
 }
-function RateSubject({ handleSubmit, setFood, setAtmos, setService, setVfm }) {
+function RateSubject({
+  restaurantName,
+  setRestaurantName,
+  handleSubmit,
+  setFood,
+  setAtmos,
+  setService,
+  setVfm,
+  handleSearchChange,
+  searchResults,
+  setSearchResults,
+  setRestAdress,
+  resturantChosen,
+  setResturantChosen,
+}) {
   return (
     <div className="infoSubject">
       <h1 className="infoHeader">Rate a restaurant!</h1>
@@ -70,30 +130,57 @@ function RateSubject({ handleSubmit, setFood, setAtmos, setService, setVfm }) {
           <input
             className="inputForm"
             placeholder="Add a restaurant..."
+            value={restaurantName}
+            onChange={handleSearchChange}
           ></input>
-          <div className="rate">
-            <div className="flexWithStars">
-              <h1>Food: </h1>
-              <StarRating onChange={setFood} />
+          {searchResults?.length > 0 && (
+            <div className="searchDropdown">
+              {searchResults.map((r) => (
+                <div
+                  key={r.place_id}
+                  className="searchItem"
+                  onClick={() => {
+                    setRestaurantName(r.name);
+                    setRestAdress(r.formatted_address);
+                    setResturantChosen(true);
+                    setSearchResults([]);
+                  }}
+                >
+                  <strong>{r.name}</strong>
+                  <div className="smallAddress">{r.formatted_address}</div>
+                </div>
+              ))}
             </div>
+          )}
 
-            <div className="flexWithStars">
-              <h1>Service: </h1>
-              <StarRating onChange={setService} />
+          {resturantChosen && (
+            <div className="rate">
+              <div className="flexWithStars">
+                <h1>Food: </h1>
+                <StarRating onChange={setFood} />
+              </div>
+
+              <div className="flexWithStars">
+                <h1>Service: </h1>
+                <StarRating onChange={setService} />
+              </div>
+              <div className="flexWithStars">
+                <h1>Atmosphere: </h1>
+                <StarRating onChange={setAtmos} />
+              </div>
+              <div className="flexWithStars">
+                <h1>VFM: </h1>
+                <StarRating onChange={setVfm} />
+              </div>
             </div>
-            <div className="flexWithStars">
-              <h1>Atmosphere: </h1>
-              <StarRating onChange={setAtmos} />
-            </div>
-            <div className="flexWithStars">
-              <h1>VFM: </h1>
-              <StarRating onChange={setVfm} />
-            </div>
-          </div>
-          <button className="addBtn">Add</button>
+          )}
+          {resturantChosen && <button className="addBtn">Add</button>}
         </form>
         <button className="btnRest">restaurants you've rated 🌟 (0)</button>
       </div>
+      {!resturantChosen && (
+        <h1 className="chooseRestMsg">Choose a restaurant!</h1>
+      )}
     </div>
   );
 }

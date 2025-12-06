@@ -93,3 +93,34 @@
   font-size: 1.4rem;
   background-color: rgb(139, 73, 201);
 }
+.searchDropdown {
+  position: absolute;
+  background: white;
+  width: 250px;
+  max-height: 250px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 50px;
+  z-index: 1000;
+}
+
+.searchItem {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.searchItem:hover {
+  background-color: #f4f4f4;
+}
+
+.smallAddress {
+  font-size: 0.8rem;
+  color: gray;
+}
+.chooseRestMsg {
+  align-self: center;
+  justify-self: center;
+  font-size: 5rem;
+}
