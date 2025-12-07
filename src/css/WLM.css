@@ -1,0 +1,28 @@
+.WLMgrid {
+  background-color: rgba(142, 111, 146, 0.444);
+  display: grid;
+  grid-template-rows: 8rem 1fr;
+}
+.GetFamiliarGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.WLMtitles {
+  text-align: center;
+  margin-top: 2rem;
+  text-decoration: underline;
+}
+.wnlmInfo,
+.wlmInfo {
+  border-top: 1px solid black;
+}
+.wnlmInfo {
+  border-right: 0.5px solid black;
+}
+.wlmInfo {
+  border-left: 0.5px solid black;
+}
+.ordermsg {
+  margin-left: 1rem;
+  margin-top: 1rem;
+}

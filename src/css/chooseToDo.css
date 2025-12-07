@@ -4,6 +4,7 @@
 }
 .btnChoose1,
 .btnChoose2 {
+  display: inline-block;
   width: 50%;
   font-size: large;
   background-color: rgb(127, 39, 209);
@@ -15,6 +16,7 @@
   border-right: 0.15rem solid black;
 }
 .btnChoose2 {
+  display: inline-block;
   border-right: 0.3rem solid black;
   border-left: 0.15rem solid black;
 }
@@ -23,4 +25,8 @@
   cursor: pointer;
   background-color: rgb(139, 73, 201);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.btnChoose1:active,
+.btnChoose2:active {
+  font-size: 2rem;
 }

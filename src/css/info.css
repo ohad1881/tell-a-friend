@@ -32,10 +32,7 @@
   cursor: pointer;
   background-color: rgb(139, 73, 201);
 }
-.btnChoose1:active,
-.btnChoose2:active {
-  font-size: 2rem;
-}
+
 .subjectBtn:active {
   transform: scale(0.95);
 }
@@ -46,7 +43,7 @@
   text-align: center;
   text-decoration: underline;
 }
-.infoSubject {
+.RateGrid {
   background-color: rgba(142, 111, 146, 0.444);
   display: grid;
   grid-template-rows: 8rem 5rem 30rem;
