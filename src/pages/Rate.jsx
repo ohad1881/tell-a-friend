@@ -146,6 +146,7 @@ function RateSubject({
   resturantChosen,
   setResturantChosen,
 }) {
+  const navigate = useNavigate();
   return (
     <div className="RateGrid">
       <h1 className="infoHeader">Rate a restaurant!</h1>
@@ -200,7 +201,9 @@ function RateSubject({
           )}
           {resturantChosen && <button className="addBtn">Add</button>}
         </form>
-        <button className="btnRest">restaurants you've rated 🌟 (0)</button>
+        <button className="btnRest" onClick={() => navigate("/ratedrest")}>
+          restaurants you've rated 🌟 (0)
+        </button>
       </div>
       {!resturantChosen && (
         <h1 className="chooseRestMsg">Choose a restaurant!</h1>

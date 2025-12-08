@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../css/login.css";
+import { useAuth } from "../contexts/FakeAuth";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
+  const { isAuthenticated, login } = useAuth();
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -15,8 +18,16 @@ function Login() {
     }
 
     setError("");
+    login(email, password);
+
     console.log("Logging in:", { email, password });
   };
+  useEffect(
+    function () {
+      if (isAuthenticated) navigate("/rate");
+    },
+    [isAuthenticated, navigate]
+  );
 
   return (
     <div className="login-container">

@@ -1,0 +1,11 @@
+.ratedRestGrid {
+  background-color: rgba(142, 111, 146, 0.444);
+  display: grid;
+  grid-template-rows: 8rem 1fr;
+}
+.ratedRestTitle {
+  text-align: center;
+  text-decoration: underline;
+  margin-top: 2rem;
+  font-size: 3rem;
+}
