@@ -16,8 +16,8 @@ function reducer(state, action) {
 
 const FAKE_USER = {
   name: "ohad",
-  email: "123@gmail.com",
-  password: "shushan1881",
+  email: "123@123",
+  password: "123",
 };
 
 function AuthProvider({ children }) {

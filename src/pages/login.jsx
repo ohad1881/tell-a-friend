@@ -24,7 +24,7 @@ function Login() {
   };
   useEffect(
     function () {
-      if (isAuthenticated) navigate("/rate");
+      if (isAuthenticated) navigate("/rate", { replace: true });
     },
     [isAuthenticated, navigate]
   );

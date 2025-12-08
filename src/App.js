@@ -9,16 +9,39 @@ import WhosLikeMe from "./pages/WhosLikeMe";
 import PNF from "./pages/PageNotFound";
 import RateList from "./pages/RatedList";
 import { AuthProvider } from "./contexts/FakeAuth";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Login />} />
           <Route path="login" element={<Login />} />
-          <Route path="rate" element={<Rate />} />
-          <Route path="whoslikeme" element={<WhosLikeMe />} />
-          <Route path="ratedrest" element={<RateList />} />
+          <Route
+            path="rate"
+            element={
+              <ProtectedRoute>
+                <Rate />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="whoslikeme"
+            element={
+              <ProtectedRoute>
+                <WhosLikeMe />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="ratedrest"
+            element={
+              <ProtectedRoute>
+                <RateList />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<PNF />} />
         </Routes>
       </BrowserRouter>
