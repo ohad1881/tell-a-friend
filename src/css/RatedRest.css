@@ -13,11 +13,24 @@
 .restList {
   padding-left: 2rem;
   list-style-type: disc;
-  overflow-y: auto;
+  overflow-y: scroll;
   max-height: calc(100vh - 26rem);
   margin-left: 4rem;
   margin-bottom: 2rem;
   font-size: 2rem;
+}
+.restList::-webkit-scrollbar {
+  width: 10px;
+}
+
+.restList::-webkit-scrollbar-thumb {
+  background: blueviolet;
+  border-radius: 8px;
+}
+
+.restList::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.315);
+  border-radius: 8px;
 }
 .restElement {
   margin-top: 1rem;
