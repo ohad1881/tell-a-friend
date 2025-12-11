@@ -116,6 +116,7 @@ function Info() {
         service,
         atmo: atmos,
         vfm,
+        restaurantName,
       }),
     });
 

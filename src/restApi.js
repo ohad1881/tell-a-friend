@@ -23,7 +23,7 @@ app.get("/restaurants", async (req, res) => {
 });
 
 app.post("/rateRest", async (req, res) => {
-  const { rest_id, email, food, service, atmo, vfm } = req.body;
+  const { rest_id, email, food, service, atmo, vfm, restaurantName } = req.body;
 
   const { data: existing } = await supabase
     .from("rest_ratings")
@@ -36,9 +36,12 @@ app.post("/rateRest", async (req, res) => {
 
   const { data, error } = await supabase
     .from("rest_ratings")
-    .upsert([{ rest_id, email, food, service, atmo, vfm }], {
-      onConflict: "rest_id,email",
-    })
+    .upsert(
+      [{ rest_id, email, food, service, atmo, vfm, rest_name: restaurantName }],
+      {
+        onConflict: "rest_id,email",
+      }
+    )
     .select();
 
   if (error) return res.status(500).json({ error: "Failed to save rating" });
@@ -87,5 +90,25 @@ app.post("/increaseRated", async (req, res) => {
     .upsert({ email, how_many: newCount }, { onConflict: "email" });
 
   res.json({ how_many: newCount });
+});
+
+app.get("/ratedRestaurants", async (req, res) => {
+  const email = req.query.email;
+
+  if (!email) {
+    return res.status(400).json({ error: "Email is required" });
+  }
+
+  const { data, error } = await supabase
+    .from("rest_ratings")
+    .select("*")
+    .eq("email", email);
+
+  if (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Failed to fetch rated restaurants" });
+  }
+
+  res.json({ restaurants: data });
 });
 app.listen(3001, () => console.log("API running"));

@@ -9,3 +9,13 @@
   margin-top: 2rem;
   font-size: 3rem;
 }
+
+.restList {
+  overflow-y: auto;
+  max-height: calc(100vh - 23rem);
+  margin-left: 4rem;
+  font-size: 2rem;
+}
+.restElement {
+  margin-top: 1rem;
+}

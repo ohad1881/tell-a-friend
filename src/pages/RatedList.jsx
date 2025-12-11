@@ -7,6 +7,7 @@ import StarRating from "../StarRating";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/FakeAuth";
 
 function Rate() {
   return (
@@ -58,9 +59,32 @@ function Info() {
   );
 }
 function RatedRestaurants() {
+  const { user } = useAuth();
+  const [restaurants, setRestaurants] = useState([]);
+  useEffect(() => {
+    async function fetchRated() {
+      const res = await fetch(
+        `http://localhost:3001/ratedRestaurants?email=${user.email}`
+      );
+      const data = await res.json();
+      setRestaurants(data.restaurants || []);
+    }
+
+    fetchRated();
+  }, []);
   return (
     <div className="ratedRestGrid">
       <h1 className="ratedRestTitle">Restaurants you've Rated</h1>
+      {restaurants.length === 0 && <p>No rated restaurants yet.</p>}
+
+      <ul className="restList">
+        {restaurants.map((r) => (
+          <li key={r.rest_id} className="restElement">
+            <strong>{r.rest_name}</strong> — Food: {r.food}, Service:{" "}
+            {r.service}, Atmosphere: {r.atmo}, VFM: {r.vfm}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
