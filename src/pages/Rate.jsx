@@ -5,6 +5,7 @@ import "../css/stars.css";
 import StarRating from "../StarRating";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/FakeAuth";
 import { useNavigate } from "react-router-dom";
 
 function Rate() {
@@ -55,7 +56,8 @@ function Info() {
   const [resturantChosen, setResturantChosen] = useState(false);
   const [restAdress, setRestAdress] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-
+  const [restID, setRestID] = useState("");
+  const { user } = useAuth();
   async function handleSearchChange(e) {
     const value = e.target.value;
     setRestaurantName(value);
@@ -65,6 +67,7 @@ function Info() {
     setAtmos(0);
     setService(0);
     setVfm(0);
+    setRestID("");
   }
   useEffect(() => {
     if (resturantChosen) return;
@@ -102,12 +105,18 @@ function Info() {
     if (!food || !service || !atmos || !vfm)
       return alert("Can't rate 0 stars!");
 
-    console.log(restaurantName);
-    console.log(restAdress);
-    console.log(food);
-    console.log(service);
-    console.log(atmos);
-    console.log(vfm);
+    await fetch("http://localhost:3001/rateRest", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        rest_id: restID,
+        email: user.email,
+        food,
+        service,
+        atmo: atmos,
+        vfm,
+      }),
+    });
   }
   return (
     <div className="info">
@@ -125,6 +134,7 @@ function Info() {
         setRestAdress={setRestAdress}
         resturantChosen={resturantChosen}
         setResturantChosen={setResturantChosen}
+        setRestID={setRestID}
       />
       <ChooseSubject />
     </div>
@@ -144,6 +154,7 @@ function RateSubject({
   setRestAdress,
   resturantChosen,
   setResturantChosen,
+  setRestID,
 }) {
   const navigate = useNavigate();
   return (
@@ -168,6 +179,7 @@ function RateSubject({
                     setRestAdress(r.formatted_address);
                     setResturantChosen(true);
                     setSearchResults([]);
+                    setRestID(r.place_id);
                   }}
                 >
                   <strong>{r.name}</strong>
