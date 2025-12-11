@@ -1,16 +1,26 @@
 import { createContext, useContext, useReducer } from "react";
 
 const AuthContext = createContext();
-const initialState = { user: null, isAuthenticated: false };
+const initialState = { user: null, isAuthenticated: false, howManyRated: 0 };
 
 function reducer(state, action) {
   switch (action.type) {
     case "login":
-      return { ...state, user: action.payload, isAuthenticated: true };
+      return {
+        ...state,
+        user: action.payload.user,
+        howManyRated: action.payload.howManyRated,
+        isAuthenticated: true,
+      };
+    case "incrementRated":
+      return {
+        ...state,
+        howManyRated: state.howManyRated + 1,
+      };
     case "logout":
-      return { ...state, user: null, isAuthenticated: false };
+      return { user: null, isAuthenticated: false, howManyRated: 0 };
     default:
-      throw new Error("error");
+      throw new Error("unknown action");
   }
 }
 
@@ -21,20 +31,54 @@ const FAKE_USER = {
 };
 
 function AuthProvider({ children }) {
-  const [{ user, isAuthenticated }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
-  function login(email, password) {
-    if (email === FAKE_USER.email && password === FAKE_USER.password)
-      dispatch({ type: "login", payload: FAKE_USER });
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  async function login(email, password) {
+    if (email !== FAKE_USER.email || password !== FAKE_USER.password) return;
+
+    try {
+      const res = await fetch(
+        `http://localhost:3001/howManyRated?email=${email}`
+      );
+      const data = await res.json();
+
+      dispatch({
+        type: "login",
+        payload: {
+          user: FAKE_USER,
+          howManyRated: data.how_many ?? 0,
+        },
+      });
+    } catch (err) {
+      console.error("Failed loading rated count:", err);
+
+      dispatch({
+        type: "login",
+        payload: {
+          user: FAKE_USER,
+          howManyRated: 0,
+        },
+      });
+    }
   }
+
   function logout() {
     dispatch({ type: "logout" });
   }
-
+  function incrementRated() {
+    dispatch({ type: "incrementRated" });
+  }
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        user: state.user,
+        isAuthenticated: state.isAuthenticated,
+        howManyRated: state.howManyRated,
+        login,
+        logout,
+        incrementRated,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

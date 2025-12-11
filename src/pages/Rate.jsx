@@ -57,7 +57,8 @@ function Info() {
   const [restAdress, setRestAdress] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [restID, setRestID] = useState("");
-  const { user } = useAuth();
+  const { user, incrementRated } = useAuth();
+
   async function handleSearchChange(e) {
     const value = e.target.value;
     setRestaurantName(value);
@@ -105,7 +106,7 @@ function Info() {
     if (!food || !service || !atmos || !vfm)
       return alert("Can't rate 0 stars!");
 
-    await fetch("http://localhost:3001/rateRest", {
+    const res = await fetch("http://localhost:3001/rateRest", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -117,7 +118,20 @@ function Info() {
         vfm,
       }),
     });
+
+    const data = await res.json();
+
+    if (data.isNewRating) {
+      await fetch("http://localhost:3001/increaseRated", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: user.email }),
+      });
+
+      incrementRated();
+    }
   }
+
   return (
     <div className="info">
       <RateSubject
@@ -157,6 +171,7 @@ function RateSubject({
   setRestID,
 }) {
   const navigate = useNavigate();
+  const { howManyRated } = useAuth();
   return (
     <div className="RateGrid">
       <h1 className="infoHeader">Rate a restaurant!</h1>
@@ -213,7 +228,7 @@ function RateSubject({
           {resturantChosen && <button className="addBtn">Add</button>}
         </form>
         <button className="btnRest" onClick={() => navigate("/ratedrest")}>
-          restaurants you've rated 🌟 (0)
+          restaurants you've rated 🌟 ({howManyRated})
         </button>
       </div>
       {!resturantChosen && (

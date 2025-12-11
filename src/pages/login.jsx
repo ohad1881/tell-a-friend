@@ -7,7 +7,10 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { isAuthenticated, login } = useAuth();
+  const { user, isAuthenticated, login } = useAuth();
+
+  const [howManyRated, setHowManyRated] = useState("");
+
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,9 +27,22 @@ function Login() {
   };
   useEffect(
     function () {
-      if (isAuthenticated) navigate("/rate", { replace: true });
+      if (!isAuthenticated) return;
+      async function fetchRatedCount() {
+        try {
+          const res = await fetch(
+            `http://localhost:3001/howManyRated?email=${user.email}`
+          );
+          const data = await res.json();
+          setHowManyRated(data.how_many_rated || 0);
+        } catch (err) {
+          console.error("Failed fetching rated count:", err);
+        }
+      }
+      fetchRatedCount();
+      navigate("/rate", { replace: true });
     },
-    [isAuthenticated, navigate]
+    [isAuthenticated, navigate, user?.email]
   );
 
   return (
