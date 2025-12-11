@@ -11,11 +11,19 @@
 }
 
 .restList {
+  padding-left: 2rem;
+  list-style-type: disc;
   overflow-y: auto;
-  max-height: calc(100vh - 23rem);
+  max-height: calc(100vh - 26rem);
   margin-left: 4rem;
+  margin-bottom: 2rem;
   font-size: 2rem;
 }
 .restElement {
   margin-top: 1rem;
+}
+.update-msg {
+  font-size: 1rem;
+  text-align: center;
+  margin-right: 2rem;
 }

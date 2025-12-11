@@ -76,7 +76,9 @@ function RatedRestaurants() {
     <div className="ratedRestGrid">
       <h1 className="ratedRestTitle">Restaurants you've Rated</h1>
       {restaurants.length === 0 && <p>No rated restaurants yet.</p>}
-
+      <p className="update-msg">
+        - if you want to update some rating, just rate the restaurant again -
+      </p>
       <ul className="restList">
         {restaurants.map((r) => (
           <li key={r.rest_id} className="restElement">
