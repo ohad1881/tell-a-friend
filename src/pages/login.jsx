@@ -12,7 +12,7 @@ function Login() {
   const [howManyRated, setHowManyRated] = useState("");
 
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
@@ -21,7 +21,12 @@ function Login() {
     }
 
     setError("");
-    login(email, password);
+    const success = await login(email, password);
+
+    if (!success) {
+      setError("Wrong email or password");
+      return;
+    }
 
     console.log("Logging in:", { email, password });
   };

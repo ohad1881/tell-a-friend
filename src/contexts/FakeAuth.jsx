@@ -34,7 +34,8 @@ function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   async function login(email, password) {
-    if (email !== FAKE_USER.email || password !== FAKE_USER.password) return;
+    if (email !== FAKE_USER.email || password !== FAKE_USER.password)
+      return false;
 
     try {
       const res = await fetch(
