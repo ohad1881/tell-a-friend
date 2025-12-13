@@ -82,7 +82,9 @@ function Login() {
             Login
           </button>
         </form>
-        <button className="signup-btn">Sign up</button>
+        <button className="signup-btn" onClick={() => navigate("/signup")}>
+          Sign up
+        </button>
       </div>
     </div>
   );

@@ -146,4 +146,26 @@ app.get("/login", async (req, res) => {
     session: data.session,
   });
 });
+app.post("/signup", async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ success: false, error: "Missing fields" });
+  }
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+
+  if (error) {
+    console.error(error);
+    return res.status(400).json({ success: false, error: error.message });
+  }
+
+  return res.json({
+    success: true,
+    user: data.user,
+  });
+});
 app.listen(3001, () => console.log("API running"));

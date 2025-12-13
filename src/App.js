@@ -10,6 +10,7 @@ import PNF from "./pages/PageNotFound";
 import RateList from "./pages/RatedList";
 import { AuthProvider } from "./contexts/FakeAuth";
 import ProtectedRoute from "./pages/ProtectedRoute";
+import SignUp from "./pages/signup";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="login" element={<Login />} />
+          <Route path="signup" element={<SignUp />} />
           <Route
             path="rate"
             element={
