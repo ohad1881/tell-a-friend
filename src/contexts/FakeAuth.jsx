@@ -24,42 +24,40 @@ function reducer(state, action) {
   }
 }
 
-const FAKE_USER = {
-  name: "ohad",
-  email: "123@123",
-  password: "123",
-};
-
 function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   async function login(email, password) {
-    if (email !== FAKE_USER.email || password !== FAKE_USER.password)
-      return false;
-
     try {
       const res = await fetch(
-        `http://localhost:3001/howManyRated?email=${email}`
+        `http://localhost:3001/login?email=${email}&password=${password}`
       );
+
       const data = await res.json();
 
-      dispatch({
-        type: "login",
-        payload: {
-          user: FAKE_USER,
-          howManyRated: data.how_many ?? 0,
-        },
-      });
-    } catch (err) {
-      console.error("Failed loading rated count:", err);
+      if (!res.ok || !data.success) {
+        return false;
+      }
+
+      const ratedRes = await fetch(
+        `http://localhost:3001/howManyRated?email=${email}`
+      );
+
+      const ratedData = await ratedRes.json();
+      const howMany = ratedData.how_many ?? 0;
 
       dispatch({
         type: "login",
         payload: {
-          user: FAKE_USER,
-          howManyRated: 0,
+          user: data.user,
+          howManyRated: howMany,
         },
       });
+
+      return true;
+    } catch (err) {
+      console.error("Login failed:", err);
+      return false;
     }
   }
 

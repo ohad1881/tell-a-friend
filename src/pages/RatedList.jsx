@@ -75,18 +75,22 @@ function RatedRestaurants() {
   return (
     <div className="ratedRestGrid">
       <h1 className="ratedRestTitle">Restaurants you've Rated</h1>
-      {restaurants.length === 0 && <p>No rated restaurants yet.</p>}
-      <p className="update-msg">
-        - if you want to update some rating, just rate the restaurant again -
-      </p>
-      <ul className="restList">
-        {restaurants.map((r) => (
-          <li key={r.rest_id} className="restElement">
-            <strong>{r.rest_name}</strong> — Food: {r.food}, Service:{" "}
-            {r.service}, Atmosphere: {r.atmo}, VFM: {r.vfm}
-          </li>
-        ))}
-      </ul>
+      {restaurants.length === 0 && (
+        <p className="noRatedMsg">- No rated restaurants yet -</p>
+      )}
+      <div>
+        <p className="update-msg">
+          - if you want to update some rating, just rate the restaurant again -
+        </p>
+        <ul className="restList">
+          {restaurants.map((r) => (
+            <li key={r.rest_id} className="restElement">
+              <strong>{r.rest_name}</strong> — Food: {r.food}, Service:{" "}
+              {r.service}, Atmosphere: {r.atmo}, VFM: {r.vfm}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

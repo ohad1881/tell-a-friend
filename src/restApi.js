@@ -25,16 +25,15 @@ app.get("/restaurants", async (req, res) => {
 app.post("/rateRest", async (req, res) => {
   const { rest_id, email, food, service, atmo, vfm, restaurantName } = req.body;
 
-  const { data: existing } = await supabase
+  const { data: rows } = await supabase
     .from("rest_ratings")
     .select("rest_id")
     .eq("rest_id", rest_id)
-    .eq("email", email)
-    .single();
+    .eq("email", email);
 
-  const isNewRating = !existing;
+  const isNewRating = rows.length === 0;
 
-  const { data, error } = await supabase
+  const { data, error: upsertError } = await supabase
     .from("rest_ratings")
     .upsert(
       [{ rest_id, email, food, service, atmo, vfm, rest_name: restaurantName }],
@@ -43,8 +42,12 @@ app.post("/rateRest", async (req, res) => {
       }
     )
     .select();
+  if (upsertError) {
+    console.log("UPSERT ERROR:", upsertError);
+  }
 
-  if (error) return res.status(500).json({ error: "Failed to save rating" });
+  if (upsertError)
+    return res.status(500).json({ error: "Failed to save rating" });
 
   res.json({
     success: true,
@@ -84,10 +87,19 @@ app.post("/increaseRated", async (req, res) => {
 
   const oldCount = data?.[0]?.how_many ?? 0;
   const newCount = oldCount + 1;
+  console.log(email);
+  console.log(data);
+  console.log(newCount);
 
-  await supabase
+  const { data: upserted, error: upsertError } = await supabase
     .from("whoRatedRestaurants")
-    .upsert({ email, how_many: newCount }, { onConflict: "email" });
+    .upsert({ email, how_many: newCount }, { onConflict: "email" })
+    .select();
+
+  if (upsertError) {
+    console.log("UPSERT ERROR:", upsertError);
+  }
+  console.log("UPSERT RESULT:", upserted);
 
   res.json({ how_many: newCount });
 });
@@ -110,5 +122,28 @@ app.get("/ratedRestaurants", async (req, res) => {
   }
 
   res.json({ restaurants: data });
+});
+app.get("/login", async (req, res) => {
+  const email = req.query.email;
+  const password = req.query.password;
+
+  if (!email || !password) {
+    return res.status(400).json({ error: "Missing email or password" });
+  }
+
+  let { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) {
+    console.error(error);
+    return res.status(401).json({ error: "Failed to login" });
+  }
+  return res.json({
+    success: true,
+    user: data.user,
+    session: data.session,
+  });
 });
 app.listen(3001, () => console.log("API running"));

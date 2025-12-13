@@ -13,7 +13,7 @@
 .restList {
   padding-left: 2rem;
   list-style-type: disc;
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: calc(100vh - 26rem);
   margin-left: 4rem;
   margin-bottom: 2rem;
@@ -38,5 +38,9 @@
 .update-msg {
   font-size: 1rem;
   text-align: center;
-  margin-right: 2rem;
+  margin-left: 2rem;
+}
+.noRatedMsg {
+  margin-left: 1rem;
+  text-align: center;
 }
