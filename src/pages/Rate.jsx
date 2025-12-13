@@ -18,20 +18,35 @@ function Rate() {
   );
 }
 function Header() {
+  const { user, logout } = useAuth();
+  const [openMenu, setOpenMenu] = useState(false);
   return (
     <div className="header">
       <h1 className="title">🍕 Tell A Friend 🍜</h1>
 
-      <svg
-        className="userIcon"
-        xmlns="http://www.w3.org/2000/svg"
-        width="30"
-        height="30"
-        fill="black"
-        viewBox="0 0 24 24"
-      >
-        <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3-6.7-5-10-5z" />
-      </svg>
+      <div className="userMenuWrapper">
+        <svg
+          className="userIcon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          fill="black"
+          viewBox="0 0 24 24"
+          onClick={() => setOpenMenu((prev) => !prev)}
+          style={{ cursor: "pointer" }}
+        >
+          <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3-6.7-5-10-5z" />
+        </svg>
+
+        {openMenu && (
+          <div className="userDropdown">
+            <p className="helloText">Hello, {user?.email}</p>
+            <button className="logoutBtn" onClick={logout}>
+              Logout
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

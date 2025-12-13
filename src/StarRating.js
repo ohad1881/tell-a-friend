@@ -12,7 +12,7 @@ export default function StarRating({ onChange }) {
   return (
     <div>
       <div className="stars">
-        {Array.from({ length: 5 }, (_, i) => (
+        {Array.from({ length: 10 }, (_, i) => (
           <Star
             key={i}
             full={tempRating ? tempRating >= i + 1 : rating >= i + 1}
