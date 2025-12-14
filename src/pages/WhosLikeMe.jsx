@@ -18,7 +18,7 @@ function Rate() {
   );
 }
 function Header() {
-  const { user, logout } = useAuth();
+  const { user, logout, username } = useAuth();
   const [openMenu, setOpenMenu] = useState(false);
   return (
     <div className="header">
@@ -40,7 +40,7 @@ function Header() {
 
         {openMenu && (
           <div className="userDropdown">
-            <p className="helloText">Hello, {user?.email}</p>
+            <p className="helloText">Hello, {username}</p>
             <button className="logoutBtn" onClick={logout}>
               Logout
             </button>
@@ -70,17 +70,72 @@ function Info() {
   );
 }
 function WLM() {
+  const { user } = useAuth();
+  const [mostSimilar, setMostSimilar] = useState([]);
+  const [leastSimilar, setLeastSimilar] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function load() {
+      const res = await fetch("http://localhost:3001/whoslikeme", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: user.email }),
+      });
+
+      const data = await res.json();
+      setMostSimilar(data.mostSimilar);
+      setLeastSimilar(data.leastSimilar);
+    }
+
+    load();
+  }, []);
   return (
     <div className="WLMgrid">
       <h1 className="infoHeader">Who's like me?</h1>
       <div className="GetFamiliarGrid">
         <div className="wnlmInfo">
           <h1 className="WLMtitles">Who's not like me</h1>
-          <p className="ordermsg">*Ordered by least familiar</p>
+          <p className="ordermsg">
+            *Ordered by least similarity. Click “see why” to see what you should
+            avoid because they liked it 🤡
+          </p>
+          <div className="toscroll">
+            {leastSimilar.map((user, index) => (
+              <div className="simUser" key={user.username}>
+                <h3>
+                  {index + 1}. {user.username} (score:
+                  {user.weightedSimilarity.toFixed(2)})
+                </h3>
+                <button className="seeWhy">see why</button>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="wlmInfo">
           <h1 className="WLMtitles">Who's like me</h1>
-          <p className="ordermsg">*Ordered by most familiar</p>
+          <p className="ordermsg">
+            *Sorted by highest similarity. Click “see why” to see what you both
+            liked and where they’ve been but you haven’t!
+          </p>
+          <div className="toscroll">
+            {mostSimilar.map((user, index) => (
+              <div className="simUser" key={user.username}>
+                <h3>
+                  {index + 1}. {user.username} (score:
+                  {user.weightedSimilarity.toFixed(2)})
+                </h3>
+                <button
+                  className="seeWhy"
+                  onClick={() =>
+                    navigate(`/whylikeme/${user.email}/${user.username}`)
+                  }
+                >
+                  see why
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

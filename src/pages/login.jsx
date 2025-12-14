@@ -27,8 +27,6 @@ function Login() {
       setError("Wrong email or password");
       return;
     }
-
-    console.log("Logging in:", { email, password });
   };
   useEffect(
     function () {

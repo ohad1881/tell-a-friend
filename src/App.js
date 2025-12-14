@@ -11,7 +11,7 @@ import RateList from "./pages/RatedList";
 import { AuthProvider } from "./contexts/FakeAuth";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import SignUp from "./pages/signup";
-
+import WhyPage from "./pages/WhyPage";
 function App() {
   return (
     <AuthProvider>
@@ -20,6 +20,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
+          <Route path="/whylikeme/:email/:username" element={<WhyPage />} />
           <Route
             path="rate"
             element={

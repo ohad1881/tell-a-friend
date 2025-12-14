@@ -26,3 +26,28 @@
   margin-left: 1rem;
   margin-top: 1rem;
 }
+.simUser {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-left: 1rem;
+}
+.seeWhy {
+  background: none;
+  border: none;
+  color: #0d4f5ae3;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.seeWhy:hover {
+  color: #0051b3;
+  text-decoration: none;
+}
+.toscroll {
+  padding-top: 1rem;
+  padding-left: 1rem;
+  font-size: 1.3rem;
+  overflow-y: auto;
+}

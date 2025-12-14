@@ -6,13 +6,14 @@ function SignUp() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!email || !password) {
+    if (!email || !password || !username) {
       setError("Please fill all fields");
       return;
     }
@@ -24,7 +25,7 @@ function SignUp() {
       const res = await fetch("http://localhost:3001/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, username }),
       });
 
       const data = await res.json();
@@ -67,6 +68,15 @@ function SignUp() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter a strong password"
+            />
+          </div>
+          <div className="input-group">
+            <label>user name</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter a user name"
             />
           </div>
 

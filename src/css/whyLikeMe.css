@@ -1,0 +1,86 @@
+/* עטיפה כללית של הדף */
+.WHYgrid {
+  background-color: rgba(142, 111, 146, 0.2);
+  padding: 2rem;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 2rem;
+}
+
+/* כותרת הדף */
+.WHYheader {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* מחלקה כללית לכל קופסת מידע */
+.WHYsection {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin: 0 auto;
+  width: 85%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* כותרת בתוך קופסה */
+.WHYsection h2 {
+  margin-bottom: 1rem;
+  text-decoration: underline;
+}
+
+/* רשימת המסעדות */
+.WHYlist {
+  max-height: 35rem;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.WHYitem {
+  padding: 0.7rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.WHYitem:last-child {
+  border-bottom: none;
+}
+
+.WHYrestName {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #4b275f;
+}
+
+.WHYscores {
+  margin-top: 0.2rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* כפתור חזרה */
+.WHYback {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.WHYback button {
+  background-color: #6e4b80;
+  color: white;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.2s;
+}
+
+.WHYback button:hover {
+  background-color: #4e2f5f;
+}
+.seperate {
+  display: flex;
+  gap: 1rem;
+}

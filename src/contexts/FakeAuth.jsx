@@ -1,7 +1,12 @@
 import { createContext, useContext, useReducer } from "react";
 
 const AuthContext = createContext();
-const initialState = { user: null, isAuthenticated: false, howManyRated: 0 };
+const initialState = {
+  user: null,
+  username: null,
+  isAuthenticated: false,
+  howManyRated: 0,
+};
 
 function reducer(state, action) {
   switch (action.type) {
@@ -9,6 +14,7 @@ function reducer(state, action) {
       return {
         ...state,
         user: action.payload.user,
+        username: action.payload.username,
         howManyRated: action.payload.howManyRated,
         isAuthenticated: true,
       };
@@ -50,6 +56,7 @@ function AuthProvider({ children }) {
         type: "login",
         payload: {
           user: data.user,
+          username: data.username,
           howManyRated: howMany,
         },
       });
@@ -71,6 +78,7 @@ function AuthProvider({ children }) {
     <AuthContext.Provider
       value={{
         user: state.user,
+        username: state.username,
         isAuthenticated: state.isAuthenticated,
         howManyRated: state.howManyRated,
         login,

@@ -19,7 +19,7 @@ function Rate() {
   );
 }
 function Header() {
-  const { user, logout } = useAuth();
+  const { user, logout, username } = useAuth();
   const [openMenu, setOpenMenu] = useState(false);
   return (
     <div className="header">
@@ -41,7 +41,7 @@ function Header() {
 
         {openMenu && (
           <div className="userDropdown">
-            <p className="helloText">Hello, {user?.email}</p>
+            <p className="helloText">Hello, {username}</p>
             <button className="logoutBtn" onClick={logout}>
               Logout
             </button>

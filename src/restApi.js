@@ -9,6 +9,21 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// helper function for algorithm
+function similarity(a, b) {
+  function scoreDiff(x, y) {
+    return 1 - Math.abs(x - y) / 10; // נרמול: 1 = זהה, 0 = הפוך
+  }
+
+  const foodSim = scoreDiff(a.food, b.food);
+  const serviceSim = scoreDiff(a.service, b.service);
+  const atmoSim = scoreDiff(a.atmo, b.atmo);
+  const vfmSim = scoreDiff(a.vfm, b.vfm);
+
+  return (foodSim + serviceSim + atmoSim + vfmSim) / 4;
+}
+
+// start of api requests
 app.get("/restaurants", async (req, res) => {
   const name = req.query.name;
 
@@ -99,7 +114,6 @@ app.post("/increaseRated", async (req, res) => {
   if (upsertError) {
     console.log("UPSERT ERROR:", upsertError);
   }
-  console.log("UPSERT RESULT:", upserted);
 
   res.json({ how_many: newCount });
 });
@@ -123,15 +137,15 @@ app.get("/ratedRestaurants", async (req, res) => {
 
   res.json({ restaurants: data });
 });
+
 app.get("/login", async (req, res) => {
-  const email = req.query.email;
-  const password = req.query.password;
+  const { email, password } = req.query;
 
   if (!email || !password) {
     return res.status(400).json({ error: "Missing email or password" });
   }
 
-  let { data, error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
@@ -140,16 +154,24 @@ app.get("/login", async (req, res) => {
     console.error(error);
     return res.status(401).json({ error: "Failed to login" });
   }
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("username")
+    .eq("email", email);
+
   return res.json({
     success: true,
     user: data.user,
+    username: profile?.[0]?.username ?? null,
     session: data.session,
   });
 });
-app.post("/signup", async (req, res) => {
-  const { email, password } = req.body;
 
-  if (!email || !password) {
+app.post("/signup", async (req, res) => {
+  const { email, password, username } = req.body;
+
+  if (!email || !password || !username) {
     return res.status(400).json({ success: false, error: "Missing fields" });
   }
 
@@ -162,10 +184,167 @@ app.post("/signup", async (req, res) => {
     console.error(error);
     return res.status(400).json({ success: false, error: error.message });
   }
+  const userId = data.user.id;
+  const { error: profileError } = await supabase.from("profiles").insert({
+    user_id: userId,
+    email: email,
+    username: username,
+  });
+
+  if (profileError) {
+    console.error(profileError);
+    return res.status(400).json({
+      success: false,
+      error: "User created but profile insert failed",
+    });
+  }
 
   return res.json({
     success: true,
     user: data.user,
+  });
+});
+
+app.post("/whoslikeme", async (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    return res.status(400).json({ success: false, error: "Missing fields" });
+  }
+
+  const { data: mine, error } = await supabase
+    .from("rest_ratings")
+    .select("rest_id, food, service, atmo, vfm")
+    .eq("email", email);
+
+  if (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, error: "DB error" });
+  }
+
+  const myRests = mine;
+
+  const restIds = myRests.map((r) => r.rest_id);
+
+  const { data: others, error: othersErr } = await supabase
+    .from("rest_ratings")
+    .select(
+      `
+      email,
+      rest_id,
+      food,
+      service,
+      atmo,
+      vfm,
+      profiles:profiles(username)
+    `
+    )
+    .in("rest_id", restIds)
+    .neq("email", email);
+
+  const similarityMap = {};
+
+  for (const other of others) {
+    const myRating = mine.find((m) => m.rest_id === other.rest_id);
+    if (!myRating) continue;
+
+    const sim = similarity(myRating, other);
+    const key = other.email; // המפתח הייחודי
+
+    if (!similarityMap[key]) {
+      similarityMap[key] = {
+        sims: [],
+        username: other.profiles?.username || null,
+      };
+    }
+
+    similarityMap[key].sims.push(sim);
+  }
+
+  const similarityScores = [];
+
+  for (const email in similarityMap) {
+    const { sims, username } = similarityMap[email];
+
+    const avg = sims.reduce((a, b) => a + b, 0) / sims.length;
+    const numShared = sims.length;
+    const weight = Math.log2(numShared + 1);
+    const weightedSimilarity = avg * weight;
+
+    similarityScores.push({
+      email,
+      username,
+      avgSimilarity: avg,
+      numShared,
+      weightedSimilarity,
+    });
+  }
+
+  console.log(similarityScores);
+
+  const mostSimilar = [...similarityScores].sort(
+    (a, b) => b.weightedSimilarity - a.weightedSimilarity
+  );
+  const leastSimilar = [...similarityScores].sort(
+    (a, b) => a.weightedSimilarity - b.weightedSimilarity
+  );
+
+  return res.json({
+    success: true,
+    mostSimilar: mostSimilar,
+    leastSimilar: leastSimilar,
+  });
+});
+app.post("/seewhy", async (req, res) => {
+  const { me, other } = req.body;
+
+  if (!me || !other) {
+    return res.status(400).json({ error: "Missing emails" });
+  }
+
+  // mine
+  const { data: mine } = await supabase
+    .from("rest_ratings")
+    .select("*")
+    .eq("email", me);
+
+  // his
+  const { data: his } = await supabase
+    .from("rest_ratings")
+    .select("*")
+    .eq("email", other);
+
+  const shared = [];
+  const mineMap = new Map(mine.map((r) => [r.rest_id, r]));
+
+  for (const h of his) {
+    if (mineMap.has(h.rest_id)) {
+      const myRating = mineMap.get(h.rest_id);
+      shared.push({
+        rest_id: h.rest_id,
+        rest_name: h.rest_name,
+        my: myRating,
+        his: h,
+        similarity: similarity(myRating, h),
+      });
+    }
+  }
+
+  const heRatedNotMe = his
+    .filter((h) => !mineMap.has(h.rest_id))
+    .sort(
+      (a, b) =>
+        b.food +
+        b.service +
+        b.atmo +
+        b.vfm -
+        (a.food + a.service + a.atmo + a.vfm)
+    );
+
+  shared.sort((a, b) => b.similarity - a.similarity);
+
+  return res.json({
+    sharedRated: shared,
+    heRatedNotMe,
   });
 });
 app.listen(3001, () => console.log("API running"));
