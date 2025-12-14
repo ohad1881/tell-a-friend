@@ -125,7 +125,7 @@ function WLM() {
                   Service: {r.his.service}, 🎭 Atmosphere: {r.his.atmo}, 💰 VFM:
                   {r.his.vfm}
                   <br />
-                  <br />⭐ Similarity: {r.similarity.toFixed(2)}
+                  <br />⭐ Similarity: {r.similarity.toFixed(2) * 100}%
                 </div>
               </div>
             ))}
