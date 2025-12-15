@@ -24,7 +24,12 @@ function reducer(state, action) {
         howManyRated: state.howManyRated + 1,
       };
     case "logout":
-      return { user: null, isAuthenticated: false, howManyRated: 0 };
+      return {
+        user: null,
+        username: null,
+        isAuthenticated: false,
+        howManyRated: 0,
+      };
     default:
       throw new Error("unknown action");
   }

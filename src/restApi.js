@@ -295,7 +295,7 @@ app.post("/whoslikeme", async (req, res) => {
   });
 });
 app.post("/seewhy", async (req, res) => {
-  const { me, other } = req.body;
+  const { me, other, isLikeMe } = req.body;
 
   if (!me || !other) {
     return res.status(400).json({ error: "Missing emails" });
@@ -341,6 +341,10 @@ app.post("/seewhy", async (req, res) => {
     );
 
   shared.sort((a, b) => b.similarity - a.similarity);
+
+  if (isLikeMe === false) {
+    shared.reverse();
+  }
 
   return res.json({
     sharedRated: shared,

@@ -107,7 +107,16 @@ function WLM() {
                   {index + 1}. {user.username} (score:
                   {user.weightedSimilarity.toFixed(2)})
                 </h3>
-                <button className="seeWhy">see why</button>
+                <button
+                  className="seeWhy"
+                  onClick={() =>
+                    navigate(`/whylikeme/${user.email}/${user.username}`, {
+                      state: { isLikeMe: false },
+                    })
+                  }
+                >
+                  see why
+                </button>
               </div>
             ))}
           </div>
@@ -128,7 +137,9 @@ function WLM() {
                 <button
                   className="seeWhy"
                   onClick={() =>
-                    navigate(`/whylikeme/${user.email}/${user.username}`)
+                    navigate(`/whylikeme/${user.email}/${user.username}`, {
+                      state: { isLikeMe: true },
+                    })
                   }
                 >
                   see why

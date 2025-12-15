@@ -5,9 +5,9 @@ import "../css/stars.css";
 import "../css/WLM.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/FakeAuth";
 import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "../css/whyLikeMe.css";
 
 function WhyLikeMe() {
@@ -20,7 +20,7 @@ function WhyLikeMe() {
   );
 }
 function Header() {
-  const { user, logout, username } = useAuth();
+  const { logout, username } = useAuth();
   const [openMenu, setOpenMenu] = useState(false);
   return (
     <div className="header">
@@ -79,6 +79,9 @@ function WLM() {
   const [shared, setShared] = useState([]);
   const [heNotMe, setHeNotMe] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
+  const isLikeMe = location.state?.isLikeMe;
+
   useEffect(() => {
     if (!user) {
       navigate("/login");
@@ -91,6 +94,7 @@ function WLM() {
         body: JSON.stringify({
           me: user.email,
           other: email,
+          isLikeMe,
         }),
       });
 
@@ -100,16 +104,24 @@ function WLM() {
     }
 
     load();
-  }, [email, user]);
+  }, [email, user, isLikeMe]);
 
   return (
     <div className="WHYgrid">
-      <h1 className="WHYheader">Why is {username} like me?</h1>
+      <h1 className="WHYheader">
+        {isLikeMe
+          ? `Why is ${username} like me?`
+          : `Why is ${username} not like me?`}
+      </h1>
 
       <div className="seperate">
         {/* restaurants we both rated */}
         <div className="WHYsection">
-          <h2>Restaurants we both rated, ordered by most similar</h2>
+          <h2>
+            {isLikeMe
+              ? `Restaurants we both rated, ordered by most similar`
+              : `Restaurants we both rated, ordered by least similar`}
+          </h2>
           <div className="WHYlist">
             {shared.map((r) => (
               <div className="WHYitem" key={r.rest_id}>
@@ -135,7 +147,9 @@ function WLM() {
         {/* his restaurants i didnt go*/}
         <div className="WHYsection">
           <h2>
-            Restaurants he rated but you didn’t, ordered by his favourites
+            {isLikeMe
+              ? `Restaurants he rated but you didn’t, ordered by his favourites`
+              : `Restaurants he liked and you should avoid 🤮, ordered by his most favourites`}
           </h2>
           <div className="WHYlist">
             {heNotMe.map((r) => (
