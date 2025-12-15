@@ -121,3 +121,41 @@
   justify-self: center;
   font-size: 5rem;
 }
+.infoIcon {
+  position: absolute;
+  top: 24.8rem;
+  left: 34rem;
+  align-self: center;
+  justify-items: center;
+  color: rgb(21, 10, 236);
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
+
+.infoIcon:hover {
+  color: rgb(33, 102, 192);
+  transform: scale(1.1);
+}
+.infoBubble {
+  position: absolute;
+  background: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  color: #333;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  top: 26rem;
+  left: 37rem;
+  max-width: 200px;
+}
+.flashRated {
+  color: red;
+  transform: scale(1.15);
+  transition: all 0.25s ease;
+}
+
+.btnRest {
+  transition: all 0.25s ease;
+}

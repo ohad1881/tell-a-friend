@@ -73,6 +73,7 @@ function Info() {
   const [searchResults, setSearchResults] = useState([]);
   const [restID, setRestID] = useState("");
   const { user, incrementRated } = useAuth();
+  const [flashRated, setFlashRated] = useState(false);
 
   async function handleSearchChange(e) {
     const value = e.target.value;
@@ -138,6 +139,7 @@ function Info() {
     const data = await res.json();
 
     if (data.isNewRating) {
+      onNewRatingFlash();
       await fetch("http://localhost:3001/increaseRated", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -147,7 +149,10 @@ function Info() {
       incrementRated();
     }
   }
-
+  function onNewRatingFlash() {
+    setFlashRated(true);
+    setTimeout(() => setFlashRated(false), 800);
+  }
   return (
     <div className="info">
       <RateSubject
@@ -165,6 +170,8 @@ function Info() {
         resturantChosen={resturantChosen}
         setResturantChosen={setResturantChosen}
         setRestID={setRestID}
+        onNewRatingFlash={onNewRatingFlash}
+        flashRated={flashRated}
       />
       <ChooseSubject />
     </div>
@@ -185,20 +192,40 @@ function RateSubject({
   resturantChosen,
   setResturantChosen,
   setRestID,
+  onNewRatingFlash,
+  flashRated,
 }) {
   const navigate = useNavigate();
   const { howManyRated } = useAuth();
+  const [isInfo, setIsInfo] = useState(false);
+
   return (
     <div className="RateGrid">
       <h1 className="infoHeader">Rate a restaurant!</h1>
+
       <div className="flexSearchAndRate">
-        <form className="chooseForm" onSubmit={handleSubmit}>
+        {/* Info tooltip */}
+        <InfoIcon
+          className="infoIcon"
+          onMouseEnter={() => setIsInfo(true)}
+          onMouseLeave={() => setIsInfo(false)}
+        />
+        {isInfo && (
+          <div className="infoBubble">
+            Rate honestly! This isn’t Google Maps – be accurate so matches
+            improve.
+          </div>
+        )}
+
+        {/* Search + Rating Form */}
+        <form className="chooseForm">
           <input
             className="inputForm"
             placeholder="Add a restaurant..."
             value={restaurantName}
             onChange={handleSearchChange}
-          ></input>
+          />
+
           {searchResults?.length > 0 && (
             <div className="searchDropdown">
               {searchResults.map((r) => (
@@ -223,36 +250,56 @@ function RateSubject({
           {resturantChosen && (
             <div className="rate">
               <div className="flexWithStars">
-                <h1>Food: </h1>
+                <h1>Food:</h1>
                 <StarRating onChange={setFood} />
               </div>
 
               <div className="flexWithStars">
-                <h1>Service: </h1>
+                <h1>Service:</h1>
                 <StarRating onChange={setService} />
               </div>
+
               <div className="flexWithStars">
-                <h1>Atmosphere: </h1>
+                <h1>Atmosphere:</h1>
                 <StarRating onChange={setAtmos} />
               </div>
+
               <div className="flexWithStars">
-                <h1>VFM: </h1>
+                <h1>VFM:</h1>
                 <StarRating onChange={setVfm} />
               </div>
             </div>
           )}
-          {resturantChosen && <button className="addBtn">Add</button>}
+
+          {resturantChosen && (
+            <button
+              className="addBtn"
+              onClick={(e) => {
+                handleSubmit(e);
+                onNewRatingFlash();
+              }}
+            >
+              Add
+            </button>
+          )}
         </form>
-        <button className="btnRest" onClick={() => navigate("/ratedrest")}>
+
+        {/* Flash button */}
+        <button
+          className={`btnRest ${flashRated ? "flashRated" : ""}`}
+          onClick={() => navigate("/ratedrest")}
+        >
           restaurants you've rated 🌟 ({howManyRated})
         </button>
       </div>
+
       {!resturantChosen && (
         <h1 className="chooseRestMsg">Choose a restaurant!</h1>
       )}
     </div>
   );
 }
+
 function ChooseSubject() {
   return (
     <div className="chooseSubject">
@@ -261,6 +308,29 @@ function ChooseSubject() {
         <button className="subjectBtn">restaurants 🍔</button>
       </div>
     </div>
+  );
+}
+function InfoIcon(props) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      {...props}
+    >
+      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+      <line
+        x1="12"
+        y1="10"
+        x2="12"
+        y2="16"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <circle cx="12" cy="7" r="1.5" fill="currentColor" />
+    </svg>
   );
 }
 export default Rate;
