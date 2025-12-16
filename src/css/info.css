@@ -159,3 +159,6 @@
 .btnRest {
   transition: all 0.25s ease;
 }
+.chsActive {
+  background-color: hsl(189, 100%, 70%);
+}

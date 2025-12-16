@@ -137,7 +137,7 @@ function WLM() {
                   Service: {r.his.service}, 🎭 Atmosphere: {r.his.atmo}, 💰 VFM:
                   {r.his.vfm}
                   <br />
-                  <br />⭐ Similarity: {r.similarity.toFixed(2) * 100}%
+                  <br />⭐ Similarity: {(r.similarity * 100).toFixed(2)}%
                 </div>
               </div>
             ))}
@@ -155,7 +155,6 @@ function WLM() {
             {heNotMe.map((r) => (
               <div className="WHYitem" key={r.rest_id}>
                 <div className="WHYrestName">{r.rest_name}</div>
-
                 <div className="WHYscores">
                   🍽 Food: {r.food}
                   <br />
@@ -183,7 +182,7 @@ function ChooseSubject() {
     <div className="chooseSubject">
       <h1 className="chooseHeader">choose</h1>
       <div className="subjectsFlex">
-        <button className="subjectBtn">restaurants 🍔</button>
+        <button className="subjectBtn chsActive">restaurants 🍔</button>
       </div>
     </div>
   );
