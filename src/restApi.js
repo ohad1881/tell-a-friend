@@ -70,6 +70,25 @@ app.post("/rateRest", async (req, res) => {
     isNewRating,
   });
 });
+app.delete("/deleteRating", async (req, res) => {
+  const { rest_id, email } = req.body;
+
+  if (!rest_id || !email) {
+    return res.status(400).json({ error: "Missing rest_id or email" });
+  }
+
+  const { error } = await supabase
+    .from("rest_ratings")
+    .delete()
+    .eq("rest_id", rest_id)
+    .eq("email", email);
+  if (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Failed to delete rating" });
+  }
+
+  return res.json({ success: true, deleted: true });
+});
 
 app.get("/howManyRated", async (req, res) => {
   const email = req.query.email;
@@ -102,6 +121,31 @@ app.post("/increaseRated", async (req, res) => {
 
   const oldCount = data?.[0]?.how_many ?? 0;
   const newCount = oldCount + 1;
+  console.log(email);
+  console.log(data);
+  console.log(newCount);
+
+  const { data: upserted, error: upsertError } = await supabase
+    .from("whoRatedRestaurants")
+    .upsert({ email, how_many: newCount }, { onConflict: "email" })
+    .select();
+
+  if (upsertError) {
+    console.log("UPSERT ERROR:", upsertError);
+  }
+
+  res.json({ how_many: newCount });
+});
+app.post("/decreaseRated", async (req, res) => {
+  const { email } = req.body;
+
+  const { data } = await supabase
+    .from("whoRatedRestaurants")
+    .select("how_many")
+    .eq("email", email);
+
+  const oldCount = data?.[0]?.how_many ?? 0;
+  const newCount = oldCount - 1;
   console.log(email);
   console.log(data);
   console.log(newCount);

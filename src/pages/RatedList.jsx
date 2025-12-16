@@ -19,7 +19,7 @@ function Rate() {
   );
 }
 function Header() {
-  const { user, logout, username } = useAuth();
+  const { user, logout, username, howManyRated } = useAuth();
   const [openMenu, setOpenMenu] = useState(false);
   return (
     <div className="header">
@@ -74,19 +74,36 @@ function Info() {
   );
 }
 function RatedRestaurants() {
-  const { user } = useAuth();
+  const { user, decrementRated } = useAuth();
   const [restaurants, setRestaurants] = useState([]);
+  async function fetchRated() {
+    const res = await fetch(
+      `http://localhost:3001/ratedRestaurants?email=${user.email}`
+    );
+    const data = await res.json();
+    setRestaurants(data.restaurants || []);
+  }
   useEffect(() => {
-    async function fetchRated() {
-      const res = await fetch(
-        `http://localhost:3001/ratedRestaurants?email=${user.email}`
-      );
-      const data = await res.json();
-      setRestaurants(data.restaurants || []);
-    }
-
     fetchRated();
   }, []);
+
+  async function handleDelete(id) {
+    const delRes = await fetch(`http://localhost:3001/deleteRating`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ rest_id: id, email: user.email }),
+    });
+    const delData = await delRes.json();
+    if (!delData.success) return alert("Delete failed");
+    await fetch("http://localhost:3001/decreaseRated", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: user.email }),
+    });
+
+    decrementRated();
+    fetchRated();
+  }
   return (
     <div className="ratedRestGrid">
       <h1 className="ratedRestTitle">Restaurants you've Rated</h1>
@@ -99,10 +116,15 @@ function RatedRestaurants() {
         </p>
         <ul className="restList">
           {restaurants.map((r) => (
-            <li key={r.rest_id} className="restElement">
-              <strong>{r.rest_name}</strong> — Food: {r.food}, Service:{" "}
-              {r.service}, Atmosphere: {r.atmo}, VFM: {r.vfm}
-            </li>
+            <div className="seeAndDelete" key={r.rest_id}>
+              <li className="restElement">
+                <strong>{r.rest_name}</strong> — Food: {r.food}, Service:{" "}
+                {r.service}, Atmosphere: {r.atmo}, VFM: {r.vfm}
+              </li>
+              <button className="dlt" onClick={() => handleDelete(r.rest_id)}>
+                delete
+              </button>
+            </div>
           ))}
         </ul>
       </div>

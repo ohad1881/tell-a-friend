@@ -30,6 +30,12 @@ function reducer(state, action) {
         isAuthenticated: false,
         howManyRated: 0,
       };
+    case "decrementRated":
+      return {
+        ...state,
+        howManyRated: state.howManyRated - 1,
+      };
+
     default:
       throw new Error("unknown action");
   }
@@ -79,6 +85,9 @@ function AuthProvider({ children }) {
   function incrementRated() {
     dispatch({ type: "incrementRated" });
   }
+  function decrementRated() {
+    dispatch({ type: "decrementRated" });
+  }
   return (
     <AuthContext.Provider
       value={{
@@ -89,6 +98,7 @@ function AuthProvider({ children }) {
         login,
         logout,
         incrementRated,
+        decrementRated,
       }}
     >
       {children}

@@ -212,8 +212,9 @@ function RateSubject({
         />
         {isInfo && (
           <div className="infoBubble">
-            Rate honestly! This isn’t Google Maps – be accurate so matches
-            improve.
+            Rate honestly! This isn’t Google Maps - no need to be nice just to
+            avoid hurting the owner’s feelings 😅 The more accurate you rate,
+            the better your matches will be.
           </div>
         )}
 

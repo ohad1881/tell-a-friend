@@ -44,3 +44,26 @@
   margin-left: 1rem;
   text-align: center;
 }
+.seeAndDelete {
+  display: flex;
+  align-items: center;
+}
+.dlt {
+  justify-self: center;
+  align-self: center;
+  background: none;
+  border: none;
+  color: #b60000;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding-top: 0.9rem;
+  margin-left: 8px;
+}
+
+.dlt:hover {
+  text-decoration: underline;
+}
+
+.dlt:active {
+  opacity: 0.6;
+}
