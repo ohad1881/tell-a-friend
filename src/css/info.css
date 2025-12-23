@@ -30,7 +30,8 @@
 }
 .subjectBtn:hover {
   cursor: pointer;
-  background-color: rgb(69, 99, 208);
+  background-color: rgb(144, 12, 173);
+  color: white;
 }
 
 .subjectBtn:active {
@@ -160,5 +161,7 @@
   transition: all 0.25s ease;
 }
 .chsActive {
-  background-color: hsl(189, 100%, 70%);
+  border: 1.5px solid purple;
+  box-shadow: 0 0 10px 3px rgba(94, 4, 114, 0.7);
+  transition: box-shadow 0.3s ease-in-out;
 }

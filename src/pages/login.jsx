@@ -15,11 +15,6 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!email || !password) {
-      setError("Please fill all fields");
-      return;
-    }
-
     setError("");
     const success = await login(email, password);
 

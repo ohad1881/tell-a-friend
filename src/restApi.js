@@ -121,9 +121,6 @@ app.post("/increaseRated", async (req, res) => {
 
   const oldCount = data?.[0]?.how_many ?? 0;
   const newCount = oldCount + 1;
-  console.log(email);
-  console.log(data);
-  console.log(newCount);
 
   const { data: upserted, error: upsertError } = await supabase
     .from("whoRatedRestaurants")
@@ -146,9 +143,6 @@ app.post("/decreaseRated", async (req, res) => {
 
   const oldCount = data?.[0]?.how_many ?? 0;
   const newCount = oldCount - 1;
-  console.log(email);
-  console.log(data);
-  console.log(newCount);
 
   const { data: upserted, error: upsertError } = await supabase
     .from("whoRatedRestaurants")
@@ -216,7 +210,34 @@ app.post("/signup", async (req, res) => {
   const { email, password, username } = req.body;
 
   if (!email || !password || !username) {
-    return res.status(400).json({ success: false, error: "Missing fields" });
+    return res
+      .status(400)
+      .json({ success: false, error: "Please fill all fields" });
+  }
+
+  if (username.length < 5 || username.length > 10) {
+    return res.status(400).json({
+      success: false,
+      error: "username must be between 5 to 10 characters",
+    });
+  }
+
+  if (password.length < 5 || password.length > 10) {
+    return res.status(400).json({
+      success: false,
+      error: "password must be between 5 to 10 characters",
+    });
+  }
+
+  const hasUpperCase = /[A-Z]/.test(password); //check if has capital letter
+  const hasNumber = /\d/.test(password); // check if has number
+
+  if (!hasUpperCase || !hasNumber) {
+    return res.status(400).json({
+      success: false,
+      error:
+        "Password must contain at least one uppercase letter and one number",
+    });
   }
 
   const { data, error } = await supabase.auth.signUp({
@@ -322,8 +343,6 @@ app.post("/whoslikeme", async (req, res) => {
       weightedSimilarity,
     });
   }
-
-  console.log(similarityScores);
 
   const mostSimilar = [...similarityScores].sort(
     (a, b) => b.weightedSimilarity - a.weightedSimilarity
