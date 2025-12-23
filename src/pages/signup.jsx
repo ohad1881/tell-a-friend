@@ -17,6 +17,25 @@ function SignUp() {
       setError("Please fill all fields");
       return;
     }
+    if (username.length < 5 || username.length > 10) {
+      setError("username must be between 5 to 10 characters");
+      return;
+    }
+
+    if (password.length < 5 || password.length > 10) {
+      setError("Password must be between 5 to 10 characters");
+      return;
+    }
+
+    const hasUpperCase = /[A-Z]/.test(password); //check if has capital letter
+    const hasNumber = /\d/.test(password); // check if has number
+
+    if (!hasUpperCase || !hasNumber) {
+      setError(
+        "Password must contain at least one uppercase letter and one number"
+      );
+      return;
+    }
 
     setError("");
     setSuccessMsg("");
