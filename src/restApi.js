@@ -38,7 +38,18 @@ app.get("/restaurants", async (req, res) => {
 });
 
 app.post("/rateRest", async (req, res) => {
-  const { rest_id, email, food, service, atmo, vfm, restaurantName } = req.body;
+  const {
+    rest_id,
+    email,
+    food,
+    service,
+    atmo,
+    vfm,
+    restaurantName,
+    restAddress,
+  } = req.body;
+
+  console.log(restAddress);
 
   const { data: rows } = await supabase
     .from("rest_ratings")
@@ -51,7 +62,18 @@ app.post("/rateRest", async (req, res) => {
   const { data, error: upsertError } = await supabase
     .from("rest_ratings")
     .upsert(
-      [{ rest_id, email, food, service, atmo, vfm, rest_name: restaurantName }],
+      [
+        {
+          rest_id,
+          email,
+          food,
+          service,
+          atmo,
+          vfm,
+          rest_name: restaurantName,
+          rest_address: restAddress,
+        },
+      ],
       {
         onConflict: "rest_id,email",
       }
@@ -70,6 +92,7 @@ app.post("/rateRest", async (req, res) => {
     isNewRating,
   });
 });
+
 app.delete("/deleteRating", async (req, res) => {
   const { rest_id, email } = req.body;
 
@@ -288,9 +311,9 @@ app.post("/whoslikeme", async (req, res) => {
 
   const myRests = mine;
 
-  const restIds = myRests.map((r) => r.rest_id);
+  const restIds = myRests.map((r) => r.rest_id); // list of my restaurants
 
-  const { data: others, error: othersErr } = await supabase
+  const { data: others, error: othersErr } = await supabase // list of people who rated like me
     .from("rest_ratings")
     .select(
       `
@@ -300,6 +323,7 @@ app.post("/whoslikeme", async (req, res) => {
       service,
       atmo,
       vfm,
+      rest_address,
       profiles:profiles(username)
     `
     )
@@ -309,6 +333,7 @@ app.post("/whoslikeme", async (req, res) => {
   const similarityMap = {};
 
   for (const other of others) {
+    // check similarity of each restaurant of others
     const myRating = mine.find((m) => m.rest_id === other.rest_id);
     if (!myRating) continue;
 
@@ -327,6 +352,7 @@ app.post("/whoslikeme", async (req, res) => {
 
   const similarityScores = [];
 
+  // calc scores for each person
   for (const email in similarityMap) {
     const { sims, username } = similarityMap[email];
 

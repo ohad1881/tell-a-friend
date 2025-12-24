@@ -155,6 +155,7 @@ function WLM() {
             {heNotMe.map((r) => (
               <div className="WHYitem" key={r.rest_id}>
                 <div className="WHYrestName">{r.rest_name}</div>
+                <div className="WHYrestAdd">📍 -{r.rest_address}-</div>
                 <div className="WHYscores">
                   🍽 Food: {r.food}
                   <br />

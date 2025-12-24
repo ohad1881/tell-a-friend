@@ -69,7 +69,7 @@ function Info() {
   const [vfm, setVfm] = useState(0);
   const [restaurantName, setRestaurantName] = useState("");
   const [resturantChosen, setResturantChosen] = useState(false);
-  const [restAdress, setRestAdress] = useState("");
+  const [restAddress, setRestAddress] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [restID, setRestID] = useState("");
   const { user, incrementRated } = useAuth();
@@ -79,7 +79,7 @@ function Info() {
     const value = e.target.value;
     setRestaurantName(value);
     setResturantChosen(false);
-    setRestAdress("");
+    setRestAddress("");
     setFood(0);
     setAtmos(0);
     setService(0);
@@ -121,7 +121,7 @@ function Info() {
 
     if (!food || !service || !atmos || !vfm)
       return alert("Can't rate 0 stars!");
-
+    console.log(restAddress);
     const res = await fetch("http://localhost:3001/rateRest", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -133,6 +133,7 @@ function Info() {
         atmo: atmos,
         vfm,
         restaurantName,
+        restAddress,
       }),
     });
 
@@ -166,7 +167,7 @@ function Info() {
         handleSearchChange={handleSearchChange}
         searchResults={searchResults}
         setSearchResults={setSearchResults}
-        setRestAdress={setRestAdress}
+        setRestAddress={setRestAddress}
         resturantChosen={resturantChosen}
         setResturantChosen={setResturantChosen}
         setRestID={setRestID}
@@ -188,7 +189,7 @@ function RateSubject({
   handleSearchChange,
   searchResults,
   setSearchResults,
-  setRestAdress,
+  setRestAddress,
   resturantChosen,
   setResturantChosen,
   setRestID,
@@ -235,7 +236,7 @@ function RateSubject({
                   className="searchItem"
                   onClick={() => {
                     setRestaurantName(r.name);
-                    setRestAdress(r.formatted_address);
+                    setRestAddress(r.formatted_address);
                     setResturantChosen(true);
                     setSearchResults([]);
                     setRestID(r.place_id);
