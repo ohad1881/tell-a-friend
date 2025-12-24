@@ -78,6 +78,7 @@ function WLM() {
   const { user } = useAuth(); // אני
   const [shared, setShared] = useState([]);
   const [heNotMe, setHeNotMe] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const isLikeMe = location.state?.isLikeMe;
@@ -88,6 +89,7 @@ function WLM() {
       return;
     }
     async function load() {
+      setLoading(true);
       const res = await fetch("http://localhost:3001/seewhy", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -101,6 +103,7 @@ function WLM() {
       const data = await res.json();
       setShared(data.sharedRated);
       setHeNotMe(data.heRatedNotMe);
+      setLoading(false);
     }
 
     load();
@@ -122,6 +125,7 @@ function WLM() {
               ? `Restaurants we both rated, ordered by most similar`
               : `Restaurants we both rated, ordered by least similar`}
           </h2>
+          {loading && <p className="loadingMsg">Loading...</p>}
           <div className="WHYlist">
             {shared.map((r) => (
               <div className="WHYitem" key={r.rest_id}>
@@ -151,23 +155,31 @@ function WLM() {
               ? `Restaurants he rated but you didn’t, ordered by his favourites`
               : `Restaurants he liked and you should avoid 🤮, ordered by his most favourites`}
           </h2>
-          <div className="WHYlist">
-            {heNotMe.map((r) => (
-              <div className="WHYitem" key={r.rest_id}>
-                <div className="WHYrestName">{r.rest_name}</div>
-                <div className="WHYrestAdd">📍 -{r.rest_address}-</div>
-                <div className="WHYscores">
-                  🍽 Food: {r.food}
-                  <br />
-                  🧑‍🍳 Service: {r.service}
-                  <br />
-                  🎭 Atmosphere: {r.atmo}
-                  <br />
-                  💰 Value: {r.vfm}
+          {loading && <p className="loadingMsg">Loading...</p>}
+          {!loading && heNotMe.length === 0 && (
+            <p className="sameRate">
+              {`- you didn't miss any restaurants of ${username}!`}
+            </p>
+          )}
+          {heNotMe.length !== 0 && (
+            <div className="WHYlist">
+              {heNotMe.map((r) => (
+                <div className="WHYitem" key={r.rest_id}>
+                  <div className="WHYrestName">{r.rest_name}</div>
+                  <div className="WHYrestAdd">📍 -{r.rest_address}-</div>
+                  <div className="WHYscores">
+                    🍽 Food: {r.food}
+                    <br />
+                    🧑‍🍳 Service: {r.service}
+                    <br />
+                    🎭 Atmosphere: {r.atmo}
+                    <br />
+                    💰 Value: {r.vfm}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

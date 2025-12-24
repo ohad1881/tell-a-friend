@@ -41,7 +41,13 @@
   margin-left: 2rem;
 }
 .noRatedMsg {
+  font-size: 1.8rem;
   margin-left: 1rem;
+  text-align: center;
+  color: rgb(204, 17, 17);
+}
+.loadingMsg {
+  font-size: 1.8rem;
   text-align: center;
 }
 .seeAndDelete {

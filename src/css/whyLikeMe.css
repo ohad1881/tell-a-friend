@@ -14,6 +14,11 @@
   font-weight: bold;
   text-decoration: underline;
 }
+.sameRate {
+  font-size: 1.2rem;
+  color: green;
+  margin-left: 0.6rem;
+}
 
 /* מחלקה כללית לכל קופסת מידע */
 .WHYsection {

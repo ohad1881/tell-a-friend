@@ -5,7 +5,6 @@ import "../css/stars.css";
 import "../css/WLM.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/FakeAuth";
 
 function Rate() {
@@ -73,10 +72,12 @@ function WLM() {
   const { user } = useAuth();
   const [mostSimilar, setMostSimilar] = useState([]);
   const [leastSimilar, setLeastSimilar] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     async function load() {
+      setLoading(true);
       const res = await fetch("http://localhost:3001/whoslikeme", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -86,6 +87,7 @@ function WLM() {
       const data = await res.json();
       setMostSimilar(data.mostSimilar);
       setLeastSimilar(data.leastSimilar);
+      setLoading(false);
     }
 
     load();
@@ -96,10 +98,19 @@ function WLM() {
       <div className="GetFamiliarGrid">
         <div className="wnlmInfo">
           <h1 className="WLMtitles">Who's not like me</h1>
-          <p className="ordermsg">
-            *Ordered by least similarity. Click “see why” to see what you should
-            avoid because they liked it 🤡
-          </p>
+          {loading && <p className="loadingMsg">Loading...</p>}
+          {!loading && leastSimilar.length === 0 && (
+            <p className="RateFirst">
+              Either you don’t have any matches yet, or you haven’t rated any
+              restaurants yet...
+            </p>
+          )}
+          {leastSimilar.length !== 0 && (
+            <p className="ordermsg">
+              *Ordered by least similarity. Click “see why” to see what you
+              should avoid because they liked it 🤡
+            </p>
+          )}
           <div className="toscroll">
             {leastSimilar.map((user, index) => (
               <div className="simUser" key={user.username}>
@@ -123,10 +134,19 @@ function WLM() {
         </div>
         <div className="wlmInfo">
           <h1 className="WLMtitles">Who's like me</h1>
-          <p className="ordermsg">
-            *Sorted by highest similarity. Click “see why” to see what you both
-            liked and where they’ve been but you haven’t!
-          </p>
+          {loading && <p className="loadingMsg">Loading...</p>}
+          {!loading && mostSimilar.length === 0 && (
+            <p className="RateFirst">
+              Either you don’t have any matches yet, or you haven’t rated any
+              restaurants yet...
+            </p>
+          )}
+          {mostSimilar.length !== 0 && (
+            <p className="ordermsg">
+              *Sorted by highest similarity. Click “see why” to see what you
+              both liked and where they’ve been but you haven’t!
+            </p>
+          )}
           <div className="toscroll">
             {mostSimilar.map((user, index) => (
               <div className="simUser" key={user.username}>

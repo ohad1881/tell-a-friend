@@ -3,9 +3,7 @@ import "../css/chooseToDo.css";
 import "../css/info.css";
 import "../css/stars.css";
 import "../css/RatedRest.css";
-import StarRating from "../StarRating";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/FakeAuth";
 
@@ -76,12 +74,15 @@ function Info() {
 function RatedRestaurants() {
   const { user, decrementRated } = useAuth();
   const [restaurants, setRestaurants] = useState([]);
+  const [loading, setLoading] = useState(false);
   async function fetchRated() {
+    setLoading(true);
     const res = await fetch(
       `http://localhost:3001/ratedRestaurants?email=${user.email}`
     );
     const data = await res.json();
     setRestaurants(data.restaurants || []);
+    setLoading(false);
   }
   useEffect(() => {
     fetchRated();
@@ -107,13 +108,17 @@ function RatedRestaurants() {
   return (
     <div className="ratedRestGrid">
       <h1 className="ratedRestTitle">Restaurants you've Rated</h1>
-      {restaurants.length === 0 && (
+      {loading && <p className="loadingMsg">Loading...</p>}
+      {restaurants.length === 0 && !loading && (
         <p className="noRatedMsg">- No rated restaurants yet -</p>
       )}
       <div>
-        <p className="update-msg">
-          - if you want to update some rating, just rate the restaurant again -
-        </p>
+        {restaurants.length !== 0 && (
+          <p className="update-msg">
+            - if you want to update some rating, just rate the restaurant again
+            -
+          </p>
+        )}
         <ul className="restList">
           {restaurants.map((r) => (
             <div className="seeAndDelete" key={r.rest_id}>
