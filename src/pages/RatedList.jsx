@@ -94,6 +94,8 @@ function RatedRestaurants() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ rest_id: id, email: user.email }),
     });
+    setRestaurants([]);
+    setLoading(true);
     const delData = await delRes.json();
     if (!delData.success) return alert("Delete failed");
     await fetch("http://localhost:3001/decreaseRated", {
