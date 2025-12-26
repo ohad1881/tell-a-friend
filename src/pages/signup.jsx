@@ -39,6 +39,7 @@ function SignUp() {
 
   return (
     <div className="login-container">
+      <p className="title-in-login">Tell a Friend</p>
       <div className="login-box">
         <h2 className="login-title">Sign Up!</h2>
 
