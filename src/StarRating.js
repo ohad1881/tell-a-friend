@@ -15,6 +15,7 @@ export default function StarRating({ onChange }) {
         {Array.from({ length: 10 }, (_, i) => (
           <Star
             key={i}
+            number={i + 1}
             full={tempRating ? tempRating >= i + 1 : rating >= i + 1}
             onRate={() => handleRating(i + 1)}
             onHoverIn={() => setTempRating(i + 1)}
@@ -25,9 +26,10 @@ export default function StarRating({ onChange }) {
     </div>
   );
 }
-function Star({ onRate, full, onHoverIn, onHoverOut }) {
+function Star({ onRate, full, onHoverIn, onHoverOut, number }) {
   return (
     <span
+      className="starWrapper"
       onClick={onRate}
       onMouseEnter={onHoverIn}
       onMouseLeave={onHoverOut}
@@ -36,6 +38,7 @@ function Star({ onRate, full, onHoverIn, onHoverOut }) {
         height: "30px",
         display: "block",
         cursor: "pointer",
+        position: "relative",
       }}
     >
       {full ? (
@@ -62,6 +65,7 @@ function Star({ onRate, full, onHoverIn, onHoverOut }) {
           />
         </svg>
       )}
+      <span className="starNumber">{number}</span>
     </span>
   );
 }
