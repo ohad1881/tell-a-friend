@@ -103,3 +103,10 @@ html {
 .starWrapper:hover .starNumber {
   opacity: 1;
 }
+.infoHeadertitle {
+  text-align: center;
+  font-size: 4rem;
+  text-decoration: underline;
+  font-weight: bold;
+  margin-top: 1rem;
+}

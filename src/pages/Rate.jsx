@@ -202,7 +202,7 @@ function RateSubject({
 
   return (
     <div className="RateGrid">
-      <h1 className="infoHeader">Rate a restaurant!</h1>
+      <h1 className="infoHeadertitle">Rate a restaurant!</h1>
 
       <div className="flexSearchAndRate">
         {/* Info tooltip */}
