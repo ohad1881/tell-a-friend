@@ -1,59 +1,89 @@
+/* רקע כללי של הדף */
 .WLMgrid {
-  background-color: rgba(142, 111, 146, 0.444);
+  background-color: rgba(142, 111, 146, 0.2);
+  padding: 2rem;
   display: grid;
-  grid-template-rows: 8rem 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 2rem;
 }
-.GetFamiliarGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-.WLMtitles {
+
+/* כותרת עליונה */
+.infoHeader {
   text-align: center;
-  margin-top: 2rem;
-  text-decoration: underline;
-}
-.wnlmInfo,
-.wlmInfo {
-  border-top: 1px solid black;
-}
-.wnlmInfo {
-  border-right: 0.5px solid black;
-}
-.wlmInfo {
-  border-left: 0.5px solid black;
-}
-.ordermsg {
-  margin-left: 1rem;
-  margin-top: 1rem;
-}
-.simUser {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  margin-left: 1rem;
-}
-.seeWhy {
-  background: none;
-  border: none;
-  color: #0d4f5ae3;
-  cursor: pointer;
-  padding: 0;
+  font-size: 2rem;
+  font-weight: bold;
   text-decoration: underline;
 }
 
-.seeWhy:hover {
-  color: #0051b3;
-  text-decoration: none;
+/* גריד של שתי הקופסאות */
+.GetFamiliarGrid {
+  display: flex;
+  gap: 1rem;
 }
-.toscroll {
-  padding-top: 1rem;
-  padding-left: 1rem;
-  font-size: 1.3rem;
-  overflow-y: auto;
+
+/* קופסה כללית */
+.wlmInfo,
+.wnlmInfo {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  width: 85%;
+  margin: 0 auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* כותרות הקופסאות */
+.WLMtitles {
+  margin-bottom: 1rem;
+  text-decoration: underline;
+}
+
+/* הודעות עזר */
+.loadingMsg {
+  font-size: 1.1rem;
 }
 .RateFirst {
-  text-align: center;
-  margin-top: 1rem;
-  font-size: 1.5rem;
-  color: rgb(214, 35, 35);
+  font-size: 1.1rem;
+  color: #4b275f;
+}
+.ordermsg {
+  color: #444;
+  margin-bottom: 0.5rem;
+}
+
+/* אזור גלילה */
+.toscroll {
+  max-height: 35rem;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+/* כל משתמש */
+.simUser {
+  padding: 0.7rem 0;
+  border-bottom: 1px solid #ddd;
+
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.simUser:last-child {
+  border-bottom: none;
+}
+
+/* כפתור see why */
+.seeWhy {
+  background-color: #6e4b80;
+  color: white;
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: 0.2s;
+  margin-bottom: 4px;
+}
+.seeWhy:hover {
+  background-color: #4e2f5f;
 }
