@@ -167,6 +167,7 @@
   top: 26rem;
   left: 37rem;
   max-width: 200px;
+  z-index: 100;
 }
 .flashRated {
   color: red;
@@ -176,4 +177,9 @@
 
 .btnRest {
   transition: all 0.25s ease;
+}
+.selected {
+  background: #6f21c9;
+  color: white;
+  font-size: 2rem;
 }

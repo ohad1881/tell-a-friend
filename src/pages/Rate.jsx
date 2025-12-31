@@ -58,7 +58,7 @@ function Choose() {
       <button className="btnChoose1" onClick={() => navigate("/whoslikeme")}>
         Who's like me? 👬
       </button>
-      <button className="btnChoose2">Ratings ⭐</button>
+      <button className="btnChoose2 selected">Ratings ⭐</button>
     </div>
   );
 }
@@ -291,7 +291,7 @@ function RateSubject({
           className={`btnRest ${flashRated ? "flashRated" : ""}`}
           onClick={() => navigate("/ratedrest")}
         >
-          restaurants you've rated 🌟 ({howManyRated})
+          Restaurants you've rated ⭐️ ({howManyRated})
         </button>
       </div>
 
@@ -305,9 +305,9 @@ function RateSubject({
 function ChooseSubject() {
   return (
     <div className="chooseSubject">
-      <h1 className="chooseHeader">choose</h1>
+      <h1 className="chooseHeader">Choose</h1>
       <div className="subjectsFlex">
-        <button className="subjectBtn chsActive">restaurants</button>
+        <button className="subjectBtn chsActive">Restaurants</button>
       </div>
     </div>
   );

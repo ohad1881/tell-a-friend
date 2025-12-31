@@ -193,9 +193,9 @@ function WLM() {
 function ChooseSubject() {
   return (
     <div className="chooseSubject">
-      <h1 className="chooseHeader">choose</h1>
+      <h1 className="chooseHeader">Choose</h1>
       <div className="subjectsFlex">
-        <button className="subjectBtn chsActive">restaurants</button>
+        <button className="subjectBtn chsActive">Restaurants</button>
       </div>
     </div>
   );

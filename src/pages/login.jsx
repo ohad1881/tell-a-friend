@@ -72,12 +72,12 @@ function Login() {
             />
           </div>
 
-          <button className="login-btn" type="submit">
+          <button className="login-btn main-press" type="submit">
             Login
           </button>
         </form>
         <button className="signup-btn" onClick={() => navigate("/signup")}>
-          Sign up
+          Sign up!
         </button>
       </div>
     </div>
