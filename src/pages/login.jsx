@@ -29,7 +29,9 @@ function Login() {
       async function fetchRatedCount() {
         try {
           const res = await fetch(
-            `http://localhost:3001/howManyRated?email=${user.email}`
+            `${
+              process.env.REACT_APP_API
+            }/howManyRated?email=${encodeURIComponent(user.email)}`
           );
           const data = await res.json();
           setHowManyRated(data.how_many_rated || 0);

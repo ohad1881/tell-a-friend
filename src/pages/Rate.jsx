@@ -97,7 +97,9 @@ function Info() {
     async function getData() {
       try {
         const response = await fetch(
-          `http://localhost:3001/restaurants?name=${restaurantName}`,
+          `${process.env.REACT_APP_API}/restaurants?name=${encodeURIComponent(
+            restaurantName
+          )}`,
           { signal: controller.signal }
         );
         const data = await response.json();
@@ -122,7 +124,7 @@ function Info() {
     if (!food || !service || !atmos || !vfm)
       return alert("Can't rate 0 stars!");
     console.log(restAddress);
-    const res = await fetch("http://localhost:3001/rateRest", {
+    const res = await fetch(`${process.env.REACT_APP_API}/rateRest`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -141,7 +143,7 @@ function Info() {
 
     if (data.isNewRating) {
       onNewRatingFlash();
-      await fetch("http://localhost:3001/increaseRated", {
+      await fetch(`${process.env.REACT_APP_API}/increaseRated`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: user.email }),

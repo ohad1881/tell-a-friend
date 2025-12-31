@@ -78,7 +78,7 @@ function WLM() {
   useEffect(() => {
     async function load() {
       setLoading(true);
-      const res = await fetch("http://localhost:3001/whoslikeme", {
+      const res = await fetch(`${process.env.REACT_APP_API}/whoslikeme`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: user.email }),

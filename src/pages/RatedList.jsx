@@ -78,7 +78,9 @@ function RatedRestaurants() {
   async function fetchRated() {
     setLoading(true);
     const res = await fetch(
-      `http://localhost:3001/ratedRestaurants?email=${user.email}`
+      `${process.env.REACT_APP_API}/ratedRestaurants?email=${encodeURIComponent(
+        user.email
+      )}`
     );
     const data = await res.json();
     setRestaurants(data.restaurants || []);
@@ -89,7 +91,7 @@ function RatedRestaurants() {
   }, []);
 
   async function handleDelete(id) {
-    const delRes = await fetch(`http://localhost:3001/deleteRating`, {
+    const delRes = await fetch(`${process.env.REACT_APP_API}/deleteRating`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ rest_id: id, email: user.email }),
@@ -98,7 +100,7 @@ function RatedRestaurants() {
     setLoading(true);
     const delData = await delRes.json();
     if (!delData.success) return alert("Delete failed");
-    await fetch("http://localhost:3001/decreaseRated", {
+    await fetch(`${process.env.REACT_APP_API}/decreaseRated`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: user.email }),
