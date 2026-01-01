@@ -17,6 +17,7 @@ function SignUp() {
     setSuccessMsg("");
 
     try {
+      setSuccessMsg("loading...");
       const res = await fetch(`${process.env.REACT_APP_API}/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -25,7 +26,6 @@ function SignUp() {
 
       const data = await res.json();
 
-      setSuccessMsg("loading...");
       if (!data.success) {
         setError(data.error || "Signup failed");
         return;
