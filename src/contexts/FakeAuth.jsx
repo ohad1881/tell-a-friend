@@ -87,7 +87,7 @@ function AuthProvider({ children }) {
   async function login(email, password) {
     try {
       const res = await fetch(
-        `http://localhost:3001/login?email=${email}&password=${password}`
+        `${process.env.REACT_APP_API}/login?email=${email}&password=${password}`
       );
 
       const data = await res.json();
@@ -97,7 +97,7 @@ function AuthProvider({ children }) {
       }
 
       const ratedRes = await fetch(
-        `http://localhost:3001/howManyRated?email=${email}`
+        `${process.env.REACT_APP_API}/howManyRated?email=${email}`
       );
 
       const ratedData = await ratedRes.json();
