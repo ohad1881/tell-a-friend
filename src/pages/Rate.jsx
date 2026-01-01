@@ -87,11 +87,12 @@ function Info() {
     setRestID("");
   }
   useEffect(() => {
-    if (resturantChosen) return;
-    if (restaurantName.length < 3) {
+    if (restaurantName.length === 0) {
       setSearchResults([]);
       return;
     }
+    if (resturantChosen) return;
+
     const controller = new AbortController();
 
     async function getData() {
@@ -118,11 +119,12 @@ function Info() {
   }, [restaurantName, resturantChosen]);
 
   async function handleSubmit(e) {
-    e.preventDefault();
     if (!restaurantName) return alert("Enter a restaurant name!");
-
-    if (!food || !service || !atmos || !vfm)
+    if (!resturantChosen) return alert("Choose a restaurant!");
+    if (!food || !service || !atmos || !vfm) {
       return alert("Can't rate 0 stars!");
+    }
+
     console.log(restAddress);
     const res = await fetch(`${process.env.REACT_APP_API}/rateRest`, {
       method: "POST",
@@ -222,7 +224,13 @@ function RateSubject({
         )}
 
         {/* Search + Rating Form */}
-        <form className="chooseForm">
+        <form
+          className="chooseForm"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
+        >
           <input
             className="inputForm"
             placeholder="Add a restaurant..."
@@ -276,13 +284,7 @@ function RateSubject({
           )}
 
           {resturantChosen && (
-            <button
-              className="addBtn"
-              onClick={(e) => {
-                handleSubmit(e);
-                onNewRatingFlash();
-              }}
-            >
+            <button className="addBtn" type="submit">
               Add
             </button>
           )}
