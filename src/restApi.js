@@ -266,6 +266,9 @@ app.post("/signup", async (req, res) => {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
+    options: {
+      emailRedirectTo: "https://tell-a-friend.vercel.app/auth/callback",
+    },
   });
 
   if (error) {
@@ -273,7 +276,7 @@ app.post("/signup", async (req, res) => {
     return res.status(400).json({ success: false, error: error.message });
   }
   const userId = data.user.id;
-  const { error: profileError } = await supabase.from("profiles").insert({
+  const { error: profileError } = await supabase.from("profiles").upsert({
     user_id: userId,
     email: email,
     username: username,
