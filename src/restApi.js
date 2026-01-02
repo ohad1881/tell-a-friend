@@ -267,7 +267,7 @@ app.post("/signup", async (req, res) => {
     email,
     password,
     options: {
-      emailRedirectTo: "https://tell-a-friend.vercel.app/auth/login",
+      emailRedirectTo: "https://tell-a-friend.vercel.app/login",
     },
   });
 
