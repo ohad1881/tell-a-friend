@@ -262,6 +262,18 @@ app.post("/signup", async (req, res) => {
         "Password must contain at least one uppercase letter and one number",
     });
   }
+  const { data: existingUser } = await supabase // check if user in profiles so return
+    .from("profiles")
+    .select("user_id")
+    .eq("email", email)
+    .single();
+
+  if (existingUser) {
+    return res.status(400).json({
+      success: false,
+      error: "Email already exists",
+    });
+  }
 
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -275,6 +287,7 @@ app.post("/signup", async (req, res) => {
     console.error(error);
     return res.status(400).json({ success: false, error: error.message });
   }
+
   const userId = data.user.id;
   const { error: profileError } = await supabase.from("profiles").upsert({
     user_id: userId,
