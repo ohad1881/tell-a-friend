@@ -31,7 +31,7 @@ function SignUp() {
         return;
       }
 
-      setSuccessMsg("Account created! now confirm via email!");
+      setSuccessMsg("Account created!");
     } catch (err) {
       console.error("Signup failed:", err);
       setError("Something went wrong");
