@@ -11,8 +11,8 @@ function Rate() {
   return (
     <div className="appGrid">
       <Header />
-      <Choose />
       <Info />
+      <ChooseSubject />s
     </div>
   );
 }
@@ -21,7 +21,7 @@ function Header() {
   const [openMenu, setOpenMenu] = useState(false);
   return (
     <div className="header">
-      <h1 className="title">🍕 Tell A Friend 🍜</h1>
+      <h1 className="title">Tell A Friend</h1>
 
       <div className="userMenuWrapper">
         <svg
@@ -29,7 +29,7 @@ function Header() {
           xmlns="http://www.w3.org/2000/svg"
           width="30"
           height="30"
-          fill="black"
+          fill="#9dc7ee"
           viewBox="0 0 24 24"
           onClick={() => setOpenMenu((prev) => !prev)}
           style={{ cursor: "pointer" }}
@@ -64,7 +64,6 @@ function Info() {
   return (
     <div className="info">
       <WLM />
-      <ChooseSubject />
     </div>
   );
 }
@@ -94,6 +93,7 @@ function WLM() {
   }, []);
   return (
     <div className="WLMgrid">
+      <Choose />
       <h1 className="infoHeader">Who's like me?</h1>
       <div className="GetFamiliarGrid">
         <div className="wnlmInfo">

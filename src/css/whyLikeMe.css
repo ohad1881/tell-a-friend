@@ -1,52 +1,75 @@
 /* עטיפה כללית של הדף */
 .WHYgrid {
-  background-color: rgba(142, 111, 146, 0.2);
   padding: 2rem;
+  margin: 1rem;
+  margin-top: -1.5rem;
+  border-radius: 1.5rem;
+  border: 0.2rem solid #e0e0e0;
+  background-color: #2b495e;
+  color: #9dc7ee;
+  box-shadow: 0 0 15px rgba(61, 80, 158, 0.6);
+
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr auto;
   gap: 2rem;
+  position: relative;
 }
 
 /* כותרת הדף */
 .WHYheader {
+  padding-top: 0.3rem;
   text-align: center;
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid gray;
+  margin-left: -2rem;
+  margin-right: -2rem;
+  padding-bottom: 2rem;
   text-decoration: underline;
 }
-.sameRate {
-  font-size: 1.2rem;
-  color: green;
-  margin-left: 0.6rem;
+
+/* אזור שתי הקופסאות */
+.seperate {
+  display: flex;
+  gap: 2rem;
 }
 
-/* מחלקה כללית לכל קופסת מידע */
+/* קופסת מידע */
 .WHYsection {
-  background: white;
-  border-radius: 10px;
-  padding: 1.5rem;
-  margin: 0 auto;
-  width: 85%;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background: #f2f4f8;
+  border-radius: 14px;
+  padding: 1.8rem;
+  width: 100%;
+  color: #2b495e;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
   display: flex;
   flex-direction: column;
 }
 
 /* כותרת בתוך קופסה */
 .WHYsection h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
   margin-bottom: 1rem;
-  text-decoration: underline;
+  border-bottom: 2px solid #9dc7ee;
+  padding-bottom: 0.3rem;
 }
 
-/* רשימת המסעדות */
+/* רשימות */
 .WHYlist {
+  overflow-y: auto;
   padding-right: 0.5rem;
-  overflow-y: scroll;
+  min-height: 32rem;
+  max-height: 32rem;
 }
 
+/* פריט */
 .WHYitem {
-  padding: 0.7rem 0;
-  border-bottom: 1px solid #ddd;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #d6dbe3;
 }
 
 .WHYitem:last-child {
@@ -54,46 +77,52 @@
 }
 
 .WHYrestName {
-  font-weight: bold;
-  font-size: 1.5rem;
+  font-weight: 700;
+  font-size: 1.2rem;
   color: #4b275f;
 }
+
 .WHYrestAdd {
-  font-size: 1rem;
-}
-.locIcon {
-  text-decoration: none;
+  font-size: 0.9rem;
+  color: #666;
 }
 
 .WHYscores {
-  margin-top: 0.2rem;
+  margin-top: 0.3rem;
   font-size: 0.9rem;
   color: #333;
 }
 
+/* הודעות */
+.loadingMsg {
+  font-size: 1rem;
+  color: #4b5f73;
+}
+
+.sameRate {
+  font-size: 1.1rem;
+  color: green;
+  margin-top: 0.5rem;
+}
+
 /* כפתור חזרה */
 .WHYback {
-  margin-top: 2rem;
   display: flex;
   justify-content: center;
 }
 
 .WHYback button {
-  background-color: #6e4b80;
-  color: white;
-  padding: 0.7rem 1.2rem;
+  background-color: #98c5f2;
+  color: #395cc7;
+  padding: 0.1rem 1.4rem;
   border: none;
-  border-radius: 8px;
+  border-radius: 20px;
   cursor: pointer;
   font-size: 1rem;
-  transition: 0.2s;
+  transition: 0.2s ease;
 }
 
 .WHYback button:hover {
-  background-color: #4e2f5f;
-}
-.seperate {
-  display: flex;
-  gap: 1rem;
-  height: 50rem;
+  background-color: #d1e9ff;
+  color: #256796;
 }

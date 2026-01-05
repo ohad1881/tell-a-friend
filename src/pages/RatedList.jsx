@@ -11,8 +11,8 @@ function Rate() {
   return (
     <div className="appGrid">
       <Header />
-      <Choose />
       <Info />
+      <ChooseSubject />
     </div>
   );
 }
@@ -21,7 +21,7 @@ function Header() {
   const [openMenu, setOpenMenu] = useState(false);
   return (
     <div className="header">
-      <h1 className="title">🍕 Tell A Friend 🍜</h1>
+      <h1 className="title">Tell A Friend</h1>
 
       <div className="userMenuWrapper">
         <svg
@@ -29,7 +29,7 @@ function Header() {
           xmlns="http://www.w3.org/2000/svg"
           width="30"
           height="30"
-          fill="black"
+          fill="#9dc7ee"
           viewBox="0 0 24 24"
           onClick={() => setOpenMenu((prev) => !prev)}
           style={{ cursor: "pointer" }}
@@ -57,7 +57,7 @@ function Choose() {
       <button className="btnChoose1" onClick={() => navigate("/whoslikeme")}>
         Who's like me? 👬
       </button>
-      <button className="btnChoose2" onClick={() => navigate("/rate")}>
+      <button className="btnChoose2 selected" onClick={() => navigate("/rate")}>
         Ratings ⭐
       </button>
     </div>
@@ -67,7 +67,6 @@ function Info() {
   return (
     <div className="info">
       <RatedRestaurants />
-      <ChooseSubject />
     </div>
   );
 }
@@ -111,6 +110,7 @@ function RatedRestaurants() {
   }
   return (
     <div className="ratedRestGrid">
+      <Choose />
       <h1 className="ratedRestTitle">Restaurants you've Rated</h1>
       {loading && <p className="loadingMsg">Loading...</p>}
       {restaurants.length === 0 && !loading && (

@@ -1,0 +1,55 @@
+.restaurantCard {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: rgba(242, 244, 248, 0.92);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 1.5rem 0;
+  width: 250px;
+  margin-top: -6rem;
+  margin-left: -2rem;
+}
+
+.restaurantImg {
+  width: 250px;
+  height: 160px;
+  filter: saturate(0.9) contrast(0.9);
+}
+
+.restaurantInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+  color: #2b495e;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.restaurantInfo h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.address {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.meta {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.status {
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+  padding-bottom: 1rem;
+}
+.RM {
+  text-align: center;
+  font-size: large;
+}

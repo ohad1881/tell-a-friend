@@ -14,8 +14,8 @@ function WhyLikeMe() {
   return (
     <div className="appGrid">
       <Header />
-      <Choose />
       <Info />
+      <ChooseSubject />
     </div>
   );
 }
@@ -24,7 +24,7 @@ function Header() {
   const [openMenu, setOpenMenu] = useState(false);
   return (
     <div className="header">
-      <h1 className="title">🍕 Tell A Friend 🍜</h1>
+      <h1 className="title">Tell A Friend</h1>
 
       <div className="userMenuWrapper">
         <svg
@@ -32,7 +32,7 @@ function Header() {
           xmlns="http://www.w3.org/2000/svg"
           width="30"
           height="30"
-          fill="black"
+          fill="#9dc7ee"
           viewBox="0 0 24 24"
           onClick={() => setOpenMenu((prev) => !prev)}
           style={{ cursor: "pointer" }}
@@ -56,7 +56,10 @@ function Choose() {
   const navigate = useNavigate();
   return (
     <div className="ChooseToDo">
-      <button className="btnChoose1" onClick={() => navigate("/whoslikeme")}>
+      <button
+        className="btnChoose1 selected"
+        onClick={() => navigate("/whoslikeme")}
+      >
         Who's like me? 👬
       </button>
       <button className="btnChoose2" onClick={() => navigate("/rate")}>
@@ -69,7 +72,6 @@ function Info() {
   return (
     <div className="info">
       <WLM />
-      <ChooseSubject />
     </div>
   );
 }
@@ -111,6 +113,7 @@ function WLM() {
 
   return (
     <div className="WHYgrid">
+      <Choose />
       <h1 className="WHYheader">
         {isLikeMe
           ? `Why is ${username} like me?`
@@ -183,9 +186,11 @@ function WLM() {
         </div>
       </div>
 
-      <div className="WHYback">
-        <button onClick={() => window.history.back()}>⬅ Back</button>
-      </div>
+      {!loading && (
+        <div className="WHYback">
+          <button onClick={() => window.history.back()}>⬅ Back</button>
+        </div>
+      )}
     </div>
   );
 }

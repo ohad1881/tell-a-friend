@@ -1,23 +1,30 @@
 .info {
+  grid-row: 3;
   display: grid;
-  grid-template-columns: 1fr 15rem;
+  grid-template-columns: 1fr;
 }
 .chooseSubject {
-  border: 0.3rem solid black;
-  border-top: 0;
-  border-bottom: 0;
-  background-color: rgba(142, 111, 146, 0.444);
+  border: 0.2rem solid #e0e0e0;
+
+  background-color: #2b495e;
 }
 .chooseHeader {
   text-align: center;
+  font-weight: 100;
   padding-top: 0.3rem;
   padding-bottom: 0.3rem;
   margin-bottom: 2rem;
-  border-bottom: 0.3rem solid black;
+  border-bottom: 0.1rem solid #e0e0e0;
 }
 .chooseSubject {
+  margin: 1rem;
+  border-radius: 1.5rem;
+  grid-row: 1/-1;
+  grid-column: 2;
   display: flex;
   flex-direction: column;
+  color: #9dc7ee;
+  box-shadow: 0 0 10px 3px rgba(61, 80, 158, 0.7);
 }
 .subjectsFlex {
   display: flex;
@@ -29,7 +36,7 @@
   padding: 1rem;
   border-radius: 12px;
   border: 0;
-  background: #cab8ff;
+  background: #a8b7ca;
   color: black;
   font-weight: 600;
   transition: 0.25s;
@@ -37,16 +44,16 @@
 
 .subjectBtn:hover {
   cursor: pointer;
-  background: #7b4bff;
-  color: white;
+  background: #e0e0e0;
+  color: #2b495e;
 }
 
 .subjectBtn:active {
   transform: scale(0.95);
 }
 .chsActive {
-  border: 1.5px solid purple;
-  box-shadow: 0 0 10px 3px rgba(94, 4, 114, 0.7);
+  border: 1.5px solid rgb(66, 107, 185);
+  box-shadow: 0 0 10px 3px rgba(61, 80, 158, 0.7);
   transition: box-shadow 0.3s ease-in-out;
 }
 .infoHeader {
@@ -57,9 +64,16 @@
   text-decoration: underline;
 }
 .RateGrid {
-  background-color: rgba(142, 111, 146, 0.444);
+  background-color: #2b495e;
   display: grid;
   grid-template-rows: 8rem 5rem 30rem;
+  color: #9dc7ee;
+  margin: 1rem;
+  margin-top: -1.5rem;
+  border-radius: 1.5rem;
+  border: 0.2rem solid #e0e0e0;
+  box-shadow: 0 0 10px 3px rgba(61, 80, 158, 0.7);
+  position: relative;
 }
 .chooseForm {
   display: flex;
@@ -72,17 +86,20 @@
   padding: 1rem;
   width: 30rem;
   border-radius: 12px;
-  border: 1px solid #484848;
+  border: 0.2rem solid #5b5b5b;
 }
 .flexSearchAndRate {
+  margin-top: 0.5rem;
   display: flex;
   justify-content: space-between;
 }
 .btnRest {
   border: none;
-  background-color: rgba(213, 187, 216, 0.444);
-  padding-right: 3rem;
+  background-color: #2b495e;
+  margin-right: 6em;
   text-decoration: underline;
+  color: #9dc7ee;
+  width: 200;
 }
 .btnRest:hover {
   cursor: pointer;
@@ -100,12 +117,12 @@
   text-align: center;
   align-self: end;
   border-radius: 12px;
-  border: 1px solid #484848;
+  border: 2px solid #9dc7ee;
 }
 .addBtn:hover {
   cursor: pointer;
-  border: 1.5px solid purple;
-  box-shadow: 0 0 10px 3px rgba(94, 4, 114, 0.7);
+  border: 1.5px solid #2b495e;
+  box-shadow: 0 0 10px 3px #9dc7ee;
   transition: box-shadow;
 }
 .searchDropdown {
@@ -117,7 +134,9 @@
   border: 1px solid #ccc;
   border-radius: 6px;
   margin-top: 50px;
+  margin-left: 1rem;
   z-index: 1000;
+  color: #2b495e;
 }
 
 .searchItem {
@@ -141,11 +160,11 @@
 }
 .infoIcon {
   position: absolute;
-  top: 24.8rem;
+  top: 9.3rem;
   left: 34rem;
   align-self: center;
   justify-items: center;
-  color: rgb(21, 10, 236);
+  color: rgb(175, 221, 228);
   width: 28px;
   height: 28px;
   cursor: pointer;
@@ -164,22 +183,21 @@
   color: #333;
   font-size: 1.2rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  top: 26rem;
+  top: 12rem;
   left: 37rem;
   max-width: 200px;
   z-index: 100;
 }
 .flashRated {
   color: red;
-  transform: scale(1.15);
+  transform: scale(1.1);
   transition: all 0.25s ease;
 }
 
 .btnRest {
   transition: all 0.25s ease;
 }
-.selected {
-  background: #6f21c9;
-  color: white;
-  font-size: 2rem;
+.seperateTheCard {
+  display: flex;
+  gap: 20rem;
 }

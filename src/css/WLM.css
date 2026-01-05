@@ -1,18 +1,30 @@
 /* רקע כללי של הדף */
 .WLMgrid {
-  background-color: rgba(142, 111, 146, 0.2);
   padding: 2rem;
   display: grid;
   grid-template-rows: auto 1fr;
   gap: 2rem;
+  margin: 1rem;
+  margin-top: -1.5rem;
+  border-radius: 1.5rem;
+  border: 0.2rem solid #e0e0e0;
+  color: #9dc7ee;
+  box-shadow: 0 0 15px rgba(61, 80, 158, 0.6);
+  position: relative;
+  background-color: #2b495e;
 }
 
 /* כותרת עליונה */
 .infoHeader {
+  padding-top: 0.3rem;
   text-align: center;
-  font-size: 2rem;
-  font-weight: bold;
-  text-decoration: underline;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #9dc7ee;
+  letter-spacing: 1px;
+  border-bottom: 1px solid gray;
+  margin-left: -2rem;
+  margin-right: -2rem;
 }
 
 /* גריד של שתי הקופסאות */
@@ -24,31 +36,34 @@
 /* קופסה כללית */
 .wlmInfo,
 .wnlmInfo {
-  background: white;
-  border-radius: 10px;
-  padding: 1.5rem;
-  width: 85%;
-  margin: 0 auto;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background: #f2f4f8;
+  border-radius: 14px;
+  padding: 1.8rem;
+  width: 100%;
+  color: #2b495e;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* כותרות הקופסאות */
 .WLMtitles {
-  margin-bottom: 1rem;
-  text-decoration: underline;
+  text-align: center;
+  margin-bottom: 1.3rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border-bottom: 2px solid #9dc7ee;
+  padding-bottom: 0.3rem;
 }
 
 /* הודעות עזר */
-.loadingMsg {
-  font-size: 1.1rem;
-}
-.RateFirst {
-  font-size: 1.1rem;
-  color: #4b275f;
-}
+.loadingMsg,
+.RateFirst,
 .ordermsg {
-  color: #444;
-  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #4b5f73;
+}
+
+.RateFirst {
+  font-weight: 500;
 }
 
 /* אזור גלילה */
@@ -60,12 +75,16 @@
 
 /* כל משתמש */
 .simUser {
-  padding: 0.7rem 0;
-  border-bottom: 1px solid #ddd;
-
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #d6dbe3;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.simUser h3 {
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .simUser:last-child {
@@ -74,16 +93,18 @@
 
 /* כפתור see why */
 .seeWhy {
-  background-color: #6e4b80;
-  color: white;
+  background-color: #2b495e;
+  color: #e0e0e0;
   border: none;
-  padding: 0.4rem 1rem;
-  border-radius: 8px;
+  padding: 0.45rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
   cursor: pointer;
-  margin-top: 0.5rem;
-  transition: 0.2s;
-  margin-bottom: 4px;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
+
 .seeWhy:hover {
-  background-color: #4e2f5f;
+  background-color: #9dc7ee;
+  color: #2b495e;
+  transform: translateY(-2px);
 }

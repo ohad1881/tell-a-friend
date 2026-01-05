@@ -1,75 +1,123 @@
+/* ===== Rated Restaurants Grid ===== */
+
 .ratedRestGrid {
-  background-color: rgba(142, 111, 146, 0.444);
+  background-color: #2b495e;
   display: grid;
   grid-template-rows: 8rem 1fr;
-}
-.ratedRestTitle {
-  text-align: center;
-  text-decoration: underline;
-  margin-top: 2rem;
-  font-size: 3rem;
+  color: #9dc7ee;
+  margin: 1rem;
+  margin-top: -1.5rem;
+  border-radius: 1.5rem;
+  border: 0.2rem solid #e0e0e0;
+  box-shadow: 0 0 10px 3px rgba(61, 80, 158, 0.7);
+  position: relative;
+  overflow: hidden;
 }
 
-.restList {
-  padding-left: 2rem;
-  list-style-type: disc;
-  overflow-y: auto;
-  max-height: calc(100vh - 26rem);
-  margin-left: 4rem;
-  margin-bottom: 2rem;
-  font-size: 2rem;
+/* ===== Title ===== */
+
+.ratedRestTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  font-weight: bold;
+  text-decoration: underline;
+  border-bottom: 1px solid rgba(224, 224, 224, 0.35);
 }
+
+/* ===== Restaurants List ===== */
+
+.restList {
+  padding: 2rem;
+  list-style: none;
+  overflow-y: auto;
+  font-size: 2rem;
+  max-height: calc(100vh - 27rem);
+}
+
+/* Scrollbar */
 .restList::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 .restList::-webkit-scrollbar-thumb {
-  background: blueviolet;
+  background: linear-gradient(#9dc7ee, #6fa3d8);
   border-radius: 8px;
 }
 
 .restList::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.315);
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 8px;
 }
+
+/* ===== Single Restaurant Card ===== */
+
 .restElement {
-  margin-top: 1rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(224, 224, 224, 0.35);
+  border-radius: 1.4rem;
+  padding: 1.2rem 1.6rem;
+  margin-bottom: 1.4rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
-.update-msg {
-  font-size: 1rem;
-  text-align: center;
-  margin-left: 2rem;
+
+/* Hover effect */
+.restElement:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(61, 80, 158, 0.6);
 }
-.noRatedMsg {
-  font-size: 1.8rem;
-  margin-left: 1rem;
-  text-align: center;
-  color: rgb(204, 17, 17);
-}
-.loadingMsg {
-  font-size: 1.8rem;
-  text-align: center;
-}
+
+/* ===== Name + Buttons Row ===== */
+
 .seeAndDelete {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
+
+/* ===== Delete Button ===== */
+
 .dlt {
-  justify-self: center;
-  align-self: center;
   background: none;
   border: none;
-  color: #b60000;
-  font-size: 1.2rem;
+  color: #ff5c5c;
+  font-size: 1.3rem;
   cursor: pointer;
-  padding-top: 0.9rem;
-  margin-left: 8px;
+  padding: 0.4rem 0.7rem;
+  border-radius: 0.6rem;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.1s ease;
 }
 
 .dlt:hover {
-  text-decoration: underline;
+  background: rgba(255, 92, 92, 0.15);
+  color: #ff7b7b;
 }
 
 .dlt:active {
-  opacity: 0.6;
+  transform: scale(0.95);
+}
+
+/* ===== Messages ===== */
+
+.update-msg {
+  padding-top: 1.5rem;
+  font-size: 1.2rem;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.noRatedMsg {
+  font-size: 1.9rem;
+  text-align: center;
+  color: rgb(204, 17, 17);
+  margin-top: 2rem;
+}
+
+.loadingMsg {
+  font-size: 1.8rem;
+  text-align: center;
 }

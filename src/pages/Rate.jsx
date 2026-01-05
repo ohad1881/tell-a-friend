@@ -7,13 +7,14 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/FakeAuth";
 import { useNavigate } from "react-router-dom";
+import RestaurantCard from "./restCard.jsx";
 
 function Rate() {
   return (
     <div className="appGrid">
       <Header />
-      <Choose />
       <Info />
+      <ChooseSubject />
     </div>
   );
 }
@@ -22,7 +23,7 @@ function Header() {
   const [openMenu, setOpenMenu] = useState(false);
   return (
     <div className="header">
-      <h1 className="title">🍕 Tell A Friend 🍜</h1>
+      <h1 className="title">Tell A Friend</h1>
 
       <div className="userMenuWrapper">
         <svg
@@ -30,7 +31,7 @@ function Header() {
           xmlns="http://www.w3.org/2000/svg"
           width="30"
           height="30"
-          fill="black"
+          fill="#9dc7ee"
           viewBox="0 0 24 24"
           onClick={() => setOpenMenu((prev) => !prev)}
           style={{ cursor: "pointer" }}
@@ -177,8 +178,8 @@ function Info() {
         setRestID={setRestID}
         onNewRatingFlash={onNewRatingFlash}
         flashRated={flashRated}
+        restAddress={restAddress}
       />
-      <ChooseSubject />
     </div>
   );
 }
@@ -199,13 +200,16 @@ function RateSubject({
   setRestID,
   onNewRatingFlash,
   flashRated,
+  restAddress,
 }) {
   const navigate = useNavigate();
   const { howManyRated } = useAuth();
   const [isInfo, setIsInfo] = useState(false);
+  const [selectedRestaurant, setSelectedRestaurant] = useState(null);
 
   return (
     <div className="RateGrid">
+      <Choose />
       <h1 className="infoHeadertitle">Rate a restaurant!</h1>
 
       <div className="flexSearchAndRate">
@@ -245,11 +249,13 @@ function RateSubject({
                   key={r.place_id}
                   className="searchItem"
                   onClick={() => {
+                    console.log(r);
                     setRestaurantName(r.name);
                     setRestAddress(r.formatted_address);
                     setResturantChosen(true);
                     setSearchResults([]);
                     setRestID(r.place_id);
+                    setSelectedRestaurant(r);
                   }}
                 >
                   <strong>{r.name}</strong>
@@ -260,33 +266,36 @@ function RateSubject({
           )}
 
           {resturantChosen && (
-            <div className="rate">
-              <div className="flexWithStars">
-                <h1>Food:</h1>
-                <StarRating onChange={setFood} />
+            <div className="seperateTheCard">
+              <div className="rate">
+                <div className="flexWithStars">
+                  <h1>Food:</h1>
+                  <StarRating onChange={setFood} />
+                </div>
+
+                <div className="flexWithStars">
+                  <h1>Service:</h1>
+                  <StarRating onChange={setService} />
+                </div>
+
+                <div className="flexWithStars">
+                  <h1>Atmosphere:</h1>
+                  <StarRating onChange={setAtmos} />
+                </div>
+
+                <div className="flexWithStars">
+                  <h1>VFM:</h1>
+                  <StarRating onChange={setVfm} />
+                </div>
+                <button className="addBtn" type="submit">
+                  Add
+                </button>
               </div>
 
-              <div className="flexWithStars">
-                <h1>Service:</h1>
-                <StarRating onChange={setService} />
-              </div>
-
-              <div className="flexWithStars">
-                <h1>Atmosphere:</h1>
-                <StarRating onChange={setAtmos} />
-              </div>
-
-              <div className="flexWithStars">
-                <h1>VFM:</h1>
-                <StarRating onChange={setVfm} />
+              <div className="restBoxChoosen">
+                <RestaurantCard restaurant={selectedRestaurant} />
               </div>
             </div>
-          )}
-
-          {resturantChosen && (
-            <button className="addBtn" type="submit">
-              Add
-            </button>
           )}
         </form>
 
@@ -295,7 +304,7 @@ function RateSubject({
           className={`btnRest ${flashRated ? "flashRated" : ""}`}
           onClick={() => navigate("/ratedrest")}
         >
-          Restaurants you've rated ⭐️ ({howManyRated})
+          Ratings ⭐️ ({howManyRated})
         </button>
       </div>
 
