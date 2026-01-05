@@ -10,7 +10,7 @@
   box-shadow: 0 0 15px rgba(61, 80, 158, 0.6);
 
   display: grid;
-  grid-template-rows: auto auto 1fr auto;
+  grid-template-rows: auto 1fr auto;
   gap: 2rem;
   position: relative;
 }
@@ -44,7 +44,7 @@
   width: 100%;
   color: #2b495e;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-
+  max-height: 50rem;
   display: flex;
   flex-direction: column;
 }
@@ -62,8 +62,8 @@
 .WHYlist {
   overflow-y: auto;
   padding-right: 0.5rem;
-  min-height: 32rem;
-  max-height: 32rem;
+
+  max-height: 43rem;
 }
 
 /* פריט */
@@ -113,6 +113,8 @@
 
 .WHYback button {
   background-color: #98c5f2;
+  width: 5%;
+  height: 20px;
   color: #395cc7;
   padding: 0.1rem 1.4rem;
   border: none;
