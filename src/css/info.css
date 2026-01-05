@@ -118,6 +118,9 @@
   align-self: end;
   border-radius: 12px;
   border: 2px solid #9dc7ee;
+  position: absolute;
+  left: 50rem;
+  bottom: 2rem;
 }
 .addBtn:hover {
   cursor: pointer;
@@ -200,4 +203,30 @@
 .seperateTheCard {
   display: flex;
   gap: 20rem;
+}
+
+.restBoxChoosen::before {
+  content: "";
+  display: block;
+  width: 320px;
+  height: 320px;
+  position: absolute;
+  margin-left: -2.2rem;
+  border-radius: 50%;
+  background-color: rgba(101, 201, 221, 0.583);
+  right: 22.4rem;
+  bottom: 10rem;
+}
+.restBoxChoosen::after {
+  content: "";
+  display: block;
+  width: 360px;
+  height: 360px;
+  position: absolute;
+  margin-left: -2.2rem;
+  border-radius: 50%;
+  background-color: rgba(101, 201, 221, 0.259);
+  right: 20.5rem;
+  bottom: 8rem;
+  z-index: 1;
 }
