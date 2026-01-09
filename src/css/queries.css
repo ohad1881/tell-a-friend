@@ -1,0 +1,169 @@
+@media (max-height: 125em) {
+  .WHYsection {
+    min-height: 156rem;
+    max-height: 160rem;
+  }
+  .WHYlist {
+    min-height: 145rem;
+    max-height: 145rem;
+  }
+}
+@media (max-height: 116.4em) {
+  .WHYsection {
+    min-height: 130rem;
+    max-height: 130rem;
+  }
+  .WHYlist {
+    min-height: 120rem;
+    max-height: 120rem;
+  }
+}
+@media (max-height: 100em) {
+  .WHYsection {
+    min-height: 110rem;
+    max-height: 110rem;
+  }
+  .WHYlist {
+    min-height: 90rem;
+    max-height: 90rem;
+  }
+}
+@media (max-height: 88.3em) {
+  .WHYsection {
+    min-height: 95rem;
+    max-height: 95rem;
+  }
+  .WHYlist {
+    min-height: 85rem;
+    max-height: 85rem;
+  }
+}
+@media (max-height: 78em) {
+  .WHYsection {
+    min-height: 84rem;
+    max-height: 84rem;
+  }
+  .WHYlist {
+    min-height: 74rem;
+    max-height: 74rem;
+  }
+}
+@media (max-height: 70.5em) {
+  .WHYsection {
+    min-height: 76rem;
+    max-height: 76rem;
+  }
+  .WHYlist {
+    min-height: 67rem;
+    max-height: 67rem;
+  }
+}
+@media (max-height: 65.8em) {
+  .WHYsection {
+    min-height: 67rem;
+    max-height: 67rem;
+  }
+  .WHYlist {
+    min-height: 58rem;
+    max-height: 58rem;
+  }
+}
+@media (max-height: 60em) {
+  .WHYsection {
+    min-height: 58rem;
+    max-height: 58rem;
+  }
+  .WHYlist {
+    min-height: 49rem;
+    max-height: 49rem;
+  }
+}
+@media (max-height: 54.8em) {
+  .WHYsection {
+    min-height: 49rem;
+    max-height: 49rem;
+  }
+  .WHYlist {
+    min-height: 42rem;
+    max-height: 42rem;
+  }
+}
+@media (max-height: 50em) {
+  .WHYsection {
+    min-height: 44rem;
+    max-height: 44rem;
+  }
+  .WHYlist {
+    min-height: 33rem;
+    max-height: 33rem;
+  }
+}
+@media (max-height: 46.6em) {
+  .WHYsection {
+    min-height: 36rem;
+    max-height: 36rem;
+  }
+  .WHYlist {
+    min-height: 30rem;
+    max-height: 30rem;
+  }
+}
+@media (max-width: 103em) {
+  .btnChoose1,
+  .btnChoose2 {
+    font-size: 10px;
+    margin-top: 3rem;
+  }
+  .selected:hover {
+    font-size: 0.9rem;
+  }
+}
+@media (max-width: 85.25em) {
+  .restBoxChoosen {
+    display: none;
+  }
+  .restBoxChoosen::before {
+    display: none;
+  }
+  .restBoxChoosen::after {
+    display: none;
+  }
+}
+@media (max-width: 71em) {
+  .btnChoose1,
+  .btnChoose2 {
+    font-size: 7px;
+    margin-top: 3.2rem;
+  }
+  .btnChoose1:hover,
+  .btnChoose2:hover {
+    font-size: 6px;
+  }
+  .selected:hover {
+    font-size: 0.6rem;
+  }
+  .WHYheader {
+    justify-self: start;
+    padding-left: 1rem;
+  }
+}
+
+@media (max-width: 53.9em) {
+  .restElement {
+    font-size: 12px;
+  }
+  .ratedRestTitle {
+    display: block;
+    justify-self: start;
+    padding-left: 1rem;
+  }
+  .infoHeadertitle {
+    display: block;
+    align-self: center;
+    padding-left: 1rem;
+  }
+  .infoHeader {
+    justify-self: start;
+    padding-left: 1rem;
+  }
+}

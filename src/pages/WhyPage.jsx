@@ -9,6 +9,7 @@ import { useAuth } from "../contexts/FakeAuth";
 import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import "../css/whyLikeMe.css";
+import "../css/queries.css";
 
 function WhyLikeMe() {
   return (
@@ -54,16 +55,24 @@ function Header() {
 }
 function Choose() {
   const navigate = useNavigate();
+  const [isMobile2, setIsMobile2] = useState(window.innerWidth < 950);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile2(window.innerWidth < 950);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   return (
     <div className="ChooseToDo">
       <button
         className="btnChoose1 selected"
         onClick={() => navigate("/whoslikeme")}
       >
-        Who's like me? 👬
+        {isMobile2 ? "👬" : "Who's like me? 👬"}
       </button>
-      <button className="btnChoose2" onClick={() => navigate("/rate")}>
-        Ratings ⭐
+      <button className="btnChoose2 " onClick={() => navigate("/rate")}>
+        {isMobile2 ? "⭐" : "Ratings ⭐"}
       </button>
     </div>
   );
@@ -185,12 +194,6 @@ function WLM() {
           )}
         </div>
       </div>
-
-      {!loading && (
-        <div className="WHYback">
-          <button onClick={() => window.history.back()}>⬅ Back</button>
-        </div>
-      )}
     </div>
   );
 }

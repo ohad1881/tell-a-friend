@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/FakeAuth";
 import { useNavigate } from "react-router-dom";
 import RestaurantCard from "./restCard.jsx";
+import "../css/queries.css";
 
 function Rate() {
   return (
@@ -52,14 +53,24 @@ function Header() {
   );
 }
 function Choose() {
+  const [isMobile2, setIsMobile2] = useState(window.innerWidth < 950);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile2(window.innerWidth < 950);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   const navigate = useNavigate();
 
   return (
     <div className="ChooseToDo">
       <button className="btnChoose1" onClick={() => navigate("/whoslikeme")}>
-        Who's like me? 👬
+        {isMobile2 ? "👬" : "Who's like me? 👬"}
       </button>
-      <button className="btnChoose2 selected">Ratings ⭐</button>
+      <button className="btnChoose2 selected" onClick={() => navigate("/rate")}>
+        {isMobile2 ? "⭐" : "Ratings ⭐"}
+      </button>
     </div>
   );
 }

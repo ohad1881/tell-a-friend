@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../css/login.css";
 import { useAuth } from "../contexts/FakeAuth";
 import { useNavigate } from "react-router-dom";
+import "../css/queries.css";
 
 function Login() {
   const [email, setEmail] = useState("");

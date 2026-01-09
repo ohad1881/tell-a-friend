@@ -6,6 +6,7 @@ import "../css/WLM.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/FakeAuth";
+import "../css/queries.css";
 
 function Rate() {
   return (
@@ -51,11 +52,24 @@ function Header() {
 }
 function Choose() {
   const navigate = useNavigate();
+  const [isMobile2, setIsMobile2] = useState(window.innerWidth < 950);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile2(window.innerWidth < 950);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   return (
     <div className="ChooseToDo">
-      <button className="btnChoose1 selected">Who's like me? 👬</button>
-      <button className="btnChoose2" onClick={() => navigate("/rate")}>
-        Ratings ⭐
+      <button
+        className="btnChoose1 selected"
+        onClick={() => navigate("/whoslikeme")}
+      >
+        {isMobile2 ? "👬" : "Who's like me? 👬"}
+      </button>
+      <button className="btnChoose2 " onClick={() => navigate("/rate")}>
+        {isMobile2 ? "⭐" : "Ratings ⭐"}
       </button>
     </div>
   );

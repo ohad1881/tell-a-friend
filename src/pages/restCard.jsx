@@ -1,4 +1,6 @@
 import "../css/restCard.css";
+import "../css/queries.css";
+
 function getPhotoUrl(photoReference) {
   if (!photoReference) return null;
 

@@ -6,6 +6,7 @@ import "../css/RatedRest.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/FakeAuth";
+import "../css/queries.css";
 
 function Rate() {
   return (
@@ -51,14 +52,21 @@ function Header() {
 }
 function Choose() {
   const navigate = useNavigate();
+  const [isMobile2, setIsMobile2] = useState(window.innerWidth < 950);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile2(window.innerWidth < 950);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   return (
     <div className="ChooseToDo">
       <button className="btnChoose1" onClick={() => navigate("/whoslikeme")}>
-        Who's like me? 👬
+        {isMobile2 ? "👬" : "Who's like me? 👬"}
       </button>
       <button className="btnChoose2 selected" onClick={() => navigate("/rate")}>
-        Ratings ⭐
+        {isMobile2 ? "⭐" : "Ratings ⭐"}
       </button>
     </div>
   );
@@ -74,6 +82,14 @@ function RatedRestaurants() {
   const { user, decrementRated } = useAuth();
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1136);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 1136);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   async function fetchRated() {
     setLoading(true);
     const res = await fetch(
@@ -111,7 +127,9 @@ function RatedRestaurants() {
   return (
     <div className="ratedRestGrid">
       <Choose />
-      <h1 className="ratedRestTitle">Restaurants you've Rated</h1>
+      <h1 className="ratedRestTitle">
+        {isMobile ? "My Ratings" : "Restaurants you've Rated"}
+      </h1>
       {loading && <p className="loadingMsg">Loading...</p>}
       {restaurants.length === 0 && !loading && (
         <p className="noRatedMsg">- No rated restaurants yet -</p>

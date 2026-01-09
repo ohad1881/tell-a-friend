@@ -49,8 +49,6 @@ app.post("/rateRest", async (req, res) => {
     restAddress,
   } = req.body;
 
-  console.log(restAddress);
-
   const { data: rows } = await supabase
     .from("rest_ratings")
     .select("rest_id")
@@ -278,9 +276,6 @@ app.post("/signup", async (req, res) => {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
-    options: {
-      emailRedirectTo: "https://tell-a-friend.vercel.app/login",
-    },
   });
 
   if (error) {
