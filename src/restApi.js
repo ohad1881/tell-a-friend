@@ -276,6 +276,9 @@ app.post("/signup", async (req, res) => {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
+    options: {
+      emailRedirectTo: "https://tell-a-friend.vercel.app/",
+    },
   });
 
   if (error) {
