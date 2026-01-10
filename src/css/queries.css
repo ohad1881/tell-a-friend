@@ -3,6 +3,7 @@
     min-height: 156rem;
     max-height: 160rem;
   }
+
   .WHYlist {
     min-height: 145rem;
     max-height: 145rem;
@@ -108,6 +109,11 @@
     max-height: 30rem;
   }
 }
+@media (max-width: 200em) {
+  #mobile-block {
+    display: none;
+  }
+}
 @media (max-width: 103em) {
   .btnChoose1,
   .btnChoose2 {
@@ -145,10 +151,19 @@
   .WHYheader {
     justify-self: start;
     padding-left: 1rem;
+    border-bottom: none;
   }
 }
 
 @media (max-width: 53.9em) {
+  #site {
+    display: none;
+  }
+
+  #mobile-block {
+    display: grid;
+  }
+
   .restElement {
     font-size: 12px;
   }
@@ -166,4 +181,14 @@
     justify-self: start;
     padding-left: 1rem;
   }
+}
+#mobile-block {
+  height: 100vh;
+  width: 100vw;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  align-content: center;
+  background: #111;
+  color: white;
 }
